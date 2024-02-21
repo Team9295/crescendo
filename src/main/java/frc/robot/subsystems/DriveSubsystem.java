@@ -1,0 +1,46 @@
+package frc.robot.subsystems;
+
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+
+public class DriveSubsystem{
+    m_masterLeft.configFactoryDefault(); 
+    m_masterLeft.setInverted(DriveConstants.kMasterLeftInvert); 
+
+    m_followerLeft.configFactoryDefault(); 
+    m_followerLeft.setInverted(DriveConstants.kFollowerLeftOppose);
+
+    m_masterRight.configFactoryDefault(); 
+    m_masterRight.setInverted(DriveConstants.kMasterRightInvert);
+
+    m_followerRight.configFactoryDefault(); 
+    m_followerRight.setInverted(DriveConstants.kMasterRightOppose);
+}
+
+public void periodic() {
+
+}
+// What does this do?
+public int getSign(double num) {
+    if(num > 0) {
+        return 1;
+    } else if (num == 0) {
+        return 0; 
+    } else if (num < 0) {
+        return -1;
+    } else {
+        return 1 / 0;
+    }
+}
+
+public void arcadeDrive() {
+
+}
+
+public void tankDrive() {
+
+}
+
+public void setPosition() {
+
+}
