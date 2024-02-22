@@ -16,4 +16,27 @@ public final class Constants {
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
   }
+
+  //will go back and add ports and tentive kFineTurningSpeed = 0.075
+  public static final class DriveConstants {
+    public static final boolean kMasterLeftInvert = true;
+    public static final boolean kFollowerLeftOppose = true;
+    public static final boolean kMasterRightInvert = false; 
+    public static final boolean kFollowerRightOppose = false; 
+
+    //from last year
+    public static final int kSlotID = 0; 
+    public static final double kSpeedLimitFactor = .7; 
+    public static final double kTurningMultiplier = 1; 
+    public static final double kSpeedPowerMultipler = 1; 
+    public static final double kTurningPowerMultiper = 1; 
+  }
+
+  public static final class ClimbConstants {
+
+  }
+
+  public static final class ArmConstants {
+    
+  }
 }
