@@ -13,6 +13,42 @@ package frc.robot;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
+  public static class ControllerConstants {
+		public static final int kDriverControllerPort = 0;
+		public static final int kOperatorControllerPort = 1;
+		public static final double kDeadzone = .1;
+		public static final double kTriggerDeadzone = .05;
+
+		public static final class Axis {
+			public static final int kLeftX = 0;
+			public static final int kLeftY = 1;
+			public static final int kRightX = 4;
+			public static final int kLeftTrigger = 2;
+			public static final int kRightTrigger = 3;
+			public static final int kRightY = 5;
+		}
+
+		public static final class Button {
+			public static final int kA = 1;
+			public static final int kB = 2;
+			public static final int kX = 3;
+			public static final int kY = 4;
+			public static final int kLeftBumper = 5;
+			public static final int kRightBumper = 6;
+			public static final int kLeftMenu = 7;
+			public static final int kRightMenu = 8;
+			public static final int kLeftTriggerButton = 9;
+			public static final int kRightTriggerButton = 10;
+		}
+
+		public static final class DPad {
+			public static final int kUp = 0;
+			public static final int kRight = 90;
+			public static final int kDown = 180;
+			public static final int kLeft = 270;
+		}
+	}
+
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
   }
