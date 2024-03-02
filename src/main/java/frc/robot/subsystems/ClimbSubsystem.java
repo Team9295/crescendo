@@ -3,21 +3,34 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class ClimbSubsystem{
-    m_masterLeft.configFactoryDefault(); 
-    m_masterLeft.setInverted(DriveConstants.kMasterLeftInvert); 
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
-    m_followerLeft.configFactoryDefault(); 
-    m_followerLeft.setInverted(DriveConstants.kFollowerLeftOppose);
+public class ClimbSubsystem extends SubsystemBase{
+    private CANSparkMax leftCilmbMotor = new CANSparkMax(ClimbConstants.LEFT_CLIMB_MOTOR_ID, MotorType.kBrushless);
+    private CANSparkMax rightClimbMotor = new CANSparkMax(ClimbConstants.RIGHT_CLIMB_MOTOR_ID, MotorType.kBrushless);
 
-    m_masterRight.configFactoryDefault(); 
-    m_masterRight.setInverted(DriveConstants.kMasterRightInvert);
+    public Climb() {
+        leftClimbMotor.restoreFactoryDefaults(); 
+        rightClimbMotor.restoreFactoryDefaults(); 
+    }
 
-    m_followerRight.configFactoryDefault(); 
-    m_followerRight.setInverted(DriveConstants.kMasterRightOppose);
+    public void runClimb(double rspeed, double lspeed) {
+        leftCilmbMotor.set(lspeed);
+        rightClimbMotor.set(rspeed);
+    }
+
+    public void stopClimb() {
+        leftClimbMotor.set(0);
+        rightClimbMotor.set(0);
+    }
+
+    @Override
+    public void periodic() {
+        //smartdashboard stuffs
+    }
 }
 
-public void periodic() {
 
-}
+
 
