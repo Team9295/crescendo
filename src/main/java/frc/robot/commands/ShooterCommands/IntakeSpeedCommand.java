@@ -1,3 +1,3 @@
-public class IntakeSpeedCommand {
-    
+public class IntakeSpeedCommand extends CommandBase {
+
 }

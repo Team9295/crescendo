@@ -14,6 +14,7 @@ import frc.robot.Constants.ShooterConstants;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
+//This subsystem needs to be changed its a sparkmax
 public class IntakeSubsystem extends SubsystemBase {
     private final TaleonSRX m_motor = new TalonSRX(ShooterConstants);
     private final Relay m_relay = new Relay(ShooterConstants.kRelayPort);
