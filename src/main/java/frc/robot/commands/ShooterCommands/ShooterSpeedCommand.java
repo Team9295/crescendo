@@ -1,4 +1,4 @@
-package frc.robot.commands.ShooterCommands.Shooter;
+package frc.robot.commands.ShooterCommands;
 
 import java.util.function.Supplier;
 
@@ -9,16 +9,17 @@ import frc.robot.subsystems.ShooterSubsystem;
 public class ShooterSpeedCommand extends Command {
 
 	private final ShooterSubsystem m_shooterSubsystem;
+    private double speed;
 
 	/**
 	 * Drive using speed inputs as a percentage output of the motor
 	 * 
 	 * @param shooterSubsystem The subsystem to be used
-	 * @param speedStraight  Supplier of straight speed
-	 * @param speedLeft      Supplier of left speed
-	 * @param speedRight     Supplier of right speed
+	 * @param speed  Supplier of straight speed
 	 */
-	public ShooterSpeedCommand(ShooterSubsystem ShooterSubsystem, Supplier<Double> speedStraight) {
+	public ShooterSpeedCommand(ShooterSubsystem shooterSubsystem, double speed) {
+		m_shooterSubsystem = shooterSubsystem;
+		this.speed = speed;
 		addRequirements(m_shooterSubsystem);
 	}
 
@@ -26,7 +27,6 @@ public class ShooterSpeedCommand extends Command {
 	 * Update the motor outputs
 	 */
 	public void execute() {
-		
-		m_shooterSubsystem.arcadeDrive(speedStraight, speedLeft, speedRight);
+		m_shooterSubsystem.setSpeed(speed);
 	}
 }

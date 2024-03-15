@@ -1,14 +1,14 @@
 package frc.robot.commands;
 
-import edu.wpilibj2.command.commandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.ClimbSubsystem;
 
-public class StopClimb extends CommandBase {
-    private final Climb climb;
+public class StopClimb extends Command {
+    private final ClimbSubsystem m_climbSubsystem;
 
-    public StopClimb(Climb subsystem) {
-        climb = subsystem; 
-        addRequirements(climb);
+    public StopClimb(ClimbSubsystem subsystem) {
+        m_climbSubsystem = subsystem;
+        addRequirements(m_climbSubsystem);
     }
 
     @Override
@@ -16,7 +16,7 @@ public class StopClimb extends CommandBase {
 
     @Override
     public void execute() {
-        climb.stopClimb();
+        m_climbSubsystem.stopClimb();
     }
 
     @Override

@@ -49,10 +49,6 @@ public final class Constants {
 		}
 	}
 
-  public static class OperatorConstants {
-    public static final int kDriverControllerPort = 0;
-  }
-
   public static final class DriveConstants {
     public static final boolean kMasterLeftInvert = true;
     public static final boolean kFollowerLeftOppose = true;
@@ -74,26 +70,35 @@ public final class Constants {
     public static final int kFollowerRightPort = 0;
   }
 
-  public static final class ClimbConstants {
-
+  public static final class ClimbConstants { // set ports
+	public static final int kLeftClimbPort = 0;
+	public static final int kRightClimbPort = 0;
   }
 
-  public static final class ArmConstants {
-
+  public static final class ArmConstants { // set port
+	public static final int kMotorPort = 0;
+	public static final boolean kMotorInverted = false;
+    public static final int kMinPosition = 0;
+    public static final double kP = 0;
+    public static final double kI = 0;
+    public static final double kIz = 0;
+    public static final double kD = 0;
+    public static final double kFF = 0;
   }
 
   public static final class ShooterConstants {
 	// set ports
-	public static final int IntakePort = 0;
-	public static final int ShooterFarPort = 0;
-	public static final int ShooterNearPort = 0;
+	public static final int kIntakePort = 0;
+	public static final int kShooterFarPort = 0;
+	public static final int kShooterNearPort = 0;
 
 	// set inverted
-	public static final boolean ShooterFarInvert = true;
-	public static final boolean ShooterNearInvert = false;
+	public static final boolean kIntakeInverted = false;
+	public static final boolean kShooterFarInverted = true;
+	public static final boolean kShooterNearInverted = false;
 
 	// set speed?
-	public static final double IntakeSpeed = 1;
-	public static final double ShooterSpeed = 1;
+	public static final double kIntakeSpeed = 1;
+	public static final double kShooterSpeed = 1;
   }
 }

@@ -2,9 +2,9 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import com.revrobotics.CANSparkMax.ControlType;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.TalonSRXControlMode;
 import com.ctre.phoenix.motorcontrol.can.BaseMotorController;
 
 import frc.robot.Constants.DriveConstants;
@@ -28,7 +28,7 @@ public class DriveSubsystem extends SubsystemBase {
         m_masterLeft.configFactoryDefault();
         m_masterLeft.setInverted(DriveConstants.kMasterLeftInvert);
 
-        m_masterLeft.addFollower(m_followerLeft);
+        m_followerLeft.follow(m_masterLeft);
 
         m_followerLeft.configFactoryDefault();
         m_followerLeft.setInverted(DriveConstants.kFollowerLeftOppose);
@@ -36,7 +36,7 @@ public class DriveSubsystem extends SubsystemBase {
         m_masterRight.configFactoryDefault();
         m_masterRight.setInverted(DriveConstants.kMasterRightInvert);
 
-        m_masterRight.addFollower(m_followerRight);
+        m_followerRight.follow(m_masterRight);
 
         m_followerRight.configFactoryDefault();
         m_followerRight.setInverted(DriveConstants.kFollowerRightOppose);
@@ -58,11 +58,8 @@ public class DriveSubsystem extends SubsystemBase {
      * @param rightSpeed Right motors percent output
      */
     public void tankDrive(double leftSpeed, double rightSpeed) {
-        m_masterLeft.set(leftSpeed);
-        m_masterRight.set(rightSpeed);
-
-        m_followerLeft.set(m_masterLeft.getMotorOutputPercent());
-        m_followerRight.set(m_masterRight.getMotorOutputPercent());
+        m_masterLeft.set(TalonSRXControlMode.PercentOutput, leftSpeed);
+        m_masterRight.set(TalonSRXControlMode.PercentOutput, rightSpeed);
     }
 
     public void setPosition() {

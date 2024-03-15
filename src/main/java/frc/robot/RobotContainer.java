@@ -4,24 +4,26 @@
 
 package frc.robot;
 
+import frc.robot.Constants.ControllerConstants;
 import frc.robot.Constants.ControllerConstants.Axis;
 import frc.robot.Constants.ControllerConstants.Button;
 import frc.robot.Constants.DriveConstants;
-import frc.robot.Constants.OperatorConstants;
+import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.ArcadeDriveCommand;
 //import frc.robot.commands.Autos;
-import frc.robot.commands.ShooterCommands.Shooter.ShooterSpeedCommand;
-import frc.robot.commands.ShooterCommands.Shooter.ShooterPositionCommand;
-import frc.robot.commands.ShooterCommands.Intake.IntakeSpeedCommand;
-import frc.robot.commands.ShooterCommands.Intake.IntakePositionCommand;
+import frc.robot.commands.ShooterCommands.ShooterSpeedCommand;
+import frc.robot.commands.ShooterCommands.IntakeSpeedCommand;
 import frc.robot.commands.ArmCommands.ArmSpeedCommand;
 import frc.robot.commands.ArmCommands.ArmPositionCommand;
-import frc.robot.commands.ClimbCommands.ClimbPositionCommand;
-import frc.robot.commands.ClimbCommands.ClimbSpeedCommand;
+// import climber commands
 import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.ShooterSubsystem;
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 /**
@@ -33,10 +35,12 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here
   private final DriveSubsystem m_driveSubsystem = new DriveSubsystem();
+  private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
+  private final ShooterSubsystem m_shooterSubsystem = new ShooterSubsystem();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
-  private final CommandXboxController m_driverController =
-      new CommandXboxController(OperatorConstants.kDriverControllerPort);
+  private final Joystick m_driverController = new Joystick(ControllerConstants.kDriverControllerPort);
+  private final Joystick m_operatorController = new Joystick(ControllerConstants.kOperatorControllerPort);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -64,19 +68,36 @@ public class RobotContainer {
             () -> (m_driverController.getRawAxis(Axis.kLeftTrigger) + 1) / 2,
             () -> (m_driverController.getRawAxis(Axis.kRightTrigger) + 1) / 2));
         
-        m_driverController.rightTrigger(0.0, new ArcadeDriveCommand(m_driveSubsystem,
+        new JoystickButton(m_driverController, Button.kRightBumper).whileTrue(
+          new ArcadeDriveCommand(m_driveSubsystem,
             () -> 0.0, () -> -DriveConstants.kFineTurningSpeed,
-            () -> DriveConstants.kFineTurningSpeed));
+            () -> DriveConstants.kFineTurningSpeed)
+        );
         
-        m_driverController.leftTrigger(0.0, new ArcadeDriveCommand(m_driveSubsystem,
+        new JoystickButton(m_driverController, Button.kLeftBumper).whileTrue(
+          new ArcadeDriveCommand(m_driveSubsystem,
             () -> 0.0, () -> DriveConstants.kFineTurningSpeed,
-            () -> -DriveConstants.kFineTurningSpeed));
+            () -> -DriveConstants.kFineTurningSpeed)
+        );
      /*
      * =========================================
      * | OPERATOR CONTROLS |
      * =========================================
      */
-    
+    new JoystickButton(m_operatorController, Button.kRightTriggerButton).whileTrue(
+      new IntakeSpeedCommand(m_intakeSubsystem, ShooterConstants.kIntakeSpeed)
+    );
+    new JoystickButton(m_operatorController, Button.kRightTriggerButton).whileFalse(
+      new IntakeSpeedCommand(m_intakeSubsystem, 0)
+    );
+
+    new JoystickButton(m_operatorController, Button.kLeftTriggerButton).whileTrue(
+      new ShooterSpeedCommand(m_shooterSubsystem, ShooterConstants.kShooterSpeed)
+    );
+    new JoystickButton(m_operatorController, Button.kLeftTriggerButton).whileFalse(
+      new ShooterSpeedCommand(m_shooterSubsystem, 0)
+    );
+
   }
 
   /**
