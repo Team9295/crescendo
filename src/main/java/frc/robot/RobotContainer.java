@@ -8,9 +8,10 @@ import frc.robot.Constants.ControllerConstants;
 import frc.robot.Constants.ControllerConstants.Axis;
 import frc.robot.Constants.ControllerConstants.Button;
 import frc.robot.Constants.DriveConstants;
+import frc.robot.Constants.LoggingConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.ArcadeDriveCommand;
-//import frc.robot.commands.Autos;
+import frc.robot.commands.Autonomous.*;
 import frc.robot.commands.ShooterCommands.ShooterSpeedCommand;
 import frc.robot.commands.ShooterCommands.IntakeSpeedCommand;
 import frc.robot.commands.ArmCommands.ArmSpeedCommand;
@@ -21,7 +22,10 @@ import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -42,10 +46,16 @@ public class RobotContainer {
   private final Joystick m_driverController = new Joystick(ControllerConstants.kDriverControllerPort);
   private final Joystick m_operatorController = new Joystick(ControllerConstants.kOperatorControllerPort);
 
+  private final SendableChooser<Command> m_autoChooser = new SendableChooser<>();
+
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the trigger bindings
     configureBindings();
+
+    // create options
+    m_autoChooser.addOption("Simple Forward Distance Auto", new DistanceBasedAutoStraightCommand(m_driveSubsystem, 5));
+    m_autoChooser.addOption("Simple Forward Time Auto", new TimeBasedAutoStraightCommand(m_driveSubsystem, 1, 1));
   }
 
   /**
@@ -100,13 +110,7 @@ public class RobotContainer {
 
   }
 
-  /**
-   * Use this to pass the autonomous command to the main {@link Robot} class.
-   *
-   * @return the command to run in autonomous
-   */
   public Command getAutonomousCommand() {
-    // An example command will be run in autonomous
-    return Autos.exampleAuto(m_exampleSubsystem);
+    return m_autoChooser.getSelected();
   }
 }

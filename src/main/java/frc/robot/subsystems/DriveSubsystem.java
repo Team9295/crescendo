@@ -27,6 +27,7 @@ public class DriveSubsystem extends SubsystemBase {
     {
         m_masterLeft.configFactoryDefault();
         m_masterLeft.setInverted(DriveConstants.kMasterLeftInvert);
+        m_masterLeft.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, DriveConstants.kSlotID, 10);
 
         m_followerLeft.follow(m_masterLeft);
 
@@ -35,6 +36,7 @@ public class DriveSubsystem extends SubsystemBase {
 
         m_masterRight.configFactoryDefault();
         m_masterRight.setInverted(DriveConstants.kMasterRightInvert);
+        m_masterRight.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, DriveConstants.kSlotID, 10);
 
         m_followerRight.follow(m_masterRight);
 
@@ -62,7 +64,31 @@ public class DriveSubsystem extends SubsystemBase {
         m_masterRight.set(TalonSRXControlMode.PercentOutput, rightSpeed);
     }
 
-    public void setPosition() {
+    public void setPosition(double leftPosition, double rightPosition) {
+        m_masterLeft.setSelectedSensorPosition(leftPosition);
+        m_masterRight.setSelectedSensorPosition(rightPosition);
+    }
+
+    
+    // -------------------- Auto Methods --------------------
+    /**
+     * 
+     * @param distance Distance in FEET
+     */
+    public void driveStraight(double distance) {
         
+        m_masterLeft.set(TalonSRXControlMode.Position, distance * DriveConstants.kTicksPerFoot);
+        m_masterRight.set(TalonSRXControlMode.Position, distance * DriveConstants.kTicksPerFoot);
+    }
+
+    /**
+     * 
+     * @param angle Postive clockwise, Negative counterclockwise
+     */
+    public void turnAngle(double angle) {
+        double decimalAngle = angle / 360;
+        double distance = decimalAngle * DriveConstants.kAngleMultiplier;
+        m_masterLeft.set(TalonSRXControlMode.Position, distance * DriveConstants.kTicksPerFoot);
+        m_masterRight.set(TalonSRXControlMode.Position, -distance * DriveConstants.kTicksPerFoot);
     }
 }

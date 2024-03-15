@@ -13,7 +13,7 @@ package frc.robot;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-  public static class ControllerConstants {
+	public static class ControllerConstants {
 		public static final int kDriverControllerPort = 0;
 		public static final int kOperatorControllerPort = 1;
 		public static final double kDeadzone = .1;
@@ -49,56 +49,67 @@ public final class Constants {
 		}
 	}
 
-  public static final class DriveConstants {
-    public static final boolean kMasterLeftInvert = true;
-    public static final boolean kFollowerLeftOppose = true;
-    public static final boolean kMasterRightInvert = false; 
-    public static final boolean kFollowerRightOppose = false; 
+	public static final class DriveConstants {
+		public static final boolean kMasterLeftInvert = true;
+		public static final boolean kFollowerLeftOppose = true;
+		public static final boolean kMasterRightInvert = false; 
+		public static final boolean kFollowerRightOppose = false; 
 
-    //from last year
-    public static final int kSlotID = 0; 
-    public static final double kSpeedLimitFactor = .7; 
-    public static final double kTurningMultiplier = 1; 
-    public static final double kSpeedPowerMultipler = 1; 
-    public static final double kTurningPowerMultiper = 1;
-	public static final double kFineTurningSpeed = 0.075;
+		//from last year
+		public static final int kSlotID = 0;
+		public static final double kSpeedLimitFactor = .7; 
+		public static final double kTurningMultiplier = 1; 
+		public static final double kSpeedPowerMultipler = 1; 
+		public static final double kTurningPowerMultiper = 1;
+		public static final double kFineTurningSpeed = 0.075;
 
-	// set ports
-	public static final int kMasterLeftPort = 0;
-    public static final int kFollowerLeftPort = 0;
-    public static final int kMasterRightPort = 0;
-    public static final int kFollowerRightPort = 0;
-  }
+		// set ports
+		public static final int kMasterLeftPort = 0;
+		public static final int kFollowerLeftPort = 0;
+		public static final int kMasterRightPort = 0;
+		public static final int kFollowerRightPort = 0;
 
-  public static final class ClimbConstants { // set ports
-	public static final int kLeftClimbPort = 0;
-	public static final int kRightClimbPort = 0;
-  }
+		private static final double gearRatio = 8.46; // double check (8.46:1?)
+		private static final double wheelDiameter = 6; // in inches
+		public static final double kRotationsPerFoot = gearRatio * (12 / (wheelDiameter * Math.PI));
+		public static final double kTicksPerFoot = kRotationsPerFoot * 4096; // 4X Decoding
+		public static final double kAngleMultiplier = 1; // set value
+  	}
 
-  public static final class ArmConstants { // set port
-	public static final int kMotorPort = 0;
-	public static final boolean kMotorInverted = false;
-    public static final int kMinPosition = 0;
-    public static final double kP = 0;
-    public static final double kI = 0;
-    public static final double kIz = 0;
-    public static final double kD = 0;
-    public static final double kFF = 0;
-  }
+  	public static final class ClimbConstants { // set ports
+		public static final int kLeftClimbPort = 0;
+		public static final int kRightClimbPort = 0;
+  	}
 
-  public static final class ShooterConstants {
-	// set ports
-	public static final int kIntakePort = 0;
-	public static final int kShooterFarPort = 0;
-	public static final int kShooterNearPort = 0;
+	public static final class ArmConstants { // set values
+		public static final int kMotorPort = 0;
+		public static final boolean kMotorInverted = false;
+		public static final int kMinPosition = 0;
+		public static final double kP = 0;
+		public static final double kI = 0;
+		public static final double kIz = 0;
+		public static final double kD = 0;
+		public static final double kFF = 0;
+		public static final double kSpeedLimitFactor = 1;
+	}
 
-	// set inverted
-	public static final boolean kIntakeInverted = false;
-	public static final boolean kShooterFarInverted = true;
-	public static final boolean kShooterNearInverted = false;
+	public static final class ShooterConstants {
+		// set ports
+		public static final int kIntakePort = 0;
+		public static final int kShooterFarPort = 0;
+		public static final int kShooterNearPort = 0;
 
-	// set speed?
-	public static final double kIntakeSpeed = 1;
-	public static final double kShooterSpeed = 1;
-  }
+		// set inverted
+		public static final boolean kIntakeInverted = false;
+		public static final boolean kShooterFarInverted = true;
+		public static final boolean kShooterNearInverted = false;
+
+		// set speed?
+		public static final double kIntakeSpeed = 1;
+		public static final double kShooterSpeed = 1;
+	}
+
+	public static final class LoggingConstants {
+		public static final boolean[] kSubsystems = { true, true, true, true, true, true, true };
+	}
 }
