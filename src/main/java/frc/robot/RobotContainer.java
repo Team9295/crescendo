@@ -89,25 +89,26 @@ public class RobotContainer {
             () -> 0.0, () -> DriveConstants.kFineTurningSpeed,
             () -> -DriveConstants.kFineTurningSpeed)
         );
+
+        new JoystickButton(m_driverController, Button.kRightTriggerButton).whileTrue(
+          new IntakeSpeedCommand(m_intakeSubsystem, ShooterConstants.kIntakeSpeed)
+        );
+        new JoystickButton(m_driverController, Button.kRightTriggerButton).whileFalse(
+          new IntakeSpeedCommand(m_intakeSubsystem, 0)
+        );
+
+        new JoystickButton(m_driverController, Button.kLeftTriggerButton).whileTrue(
+          new ShooterSpeedCommand(m_shooterSubsystem, ShooterConstants.kShooterSpeed)
+        );
+        new JoystickButton(m_driverController, Button.kLeftTriggerButton).whileFalse(
+          new ShooterSpeedCommand(m_shooterSubsystem, 0)
+        );
      /*
      * =========================================
      * | OPERATOR CONTROLS |
      * =========================================
      */
-    new JoystickButton(m_operatorController, Button.kRightTriggerButton).whileTrue(
-      new IntakeSpeedCommand(m_intakeSubsystem, ShooterConstants.kIntakeSpeed)
-    );
-    new JoystickButton(m_operatorController, Button.kRightTriggerButton).whileFalse(
-      new IntakeSpeedCommand(m_intakeSubsystem, 0)
-    );
-
-    new JoystickButton(m_operatorController, Button.kLeftTriggerButton).whileTrue(
-      new ShooterSpeedCommand(m_shooterSubsystem, ShooterConstants.kShooterSpeed)
-    );
-    new JoystickButton(m_operatorController, Button.kLeftTriggerButton).whileFalse(
-      new ShooterSpeedCommand(m_shooterSubsystem, 0)
-    );
-
+    
   }
 
   public Command getAutonomousCommand() {
