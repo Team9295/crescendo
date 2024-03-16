@@ -5,11 +5,7 @@ import frc.robot.Constants.ShooterConstants;
 
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.CANSparkMax;
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.FeedbackDevice;
-import com.ctre.phoenix.motorcontrol.can.BaseMotorController;
 
-//This subsystem needs to be changed its a sparkmax
 public class IntakeSubsystem extends SubsystemBase {
     private final CANSparkMax m_motor = new CANSparkMax(ShooterConstants.kIntakePort, MotorType.kBrushless);
 
@@ -19,12 +15,12 @@ public class IntakeSubsystem extends SubsystemBase {
 
     public void runIntake()
     {
-        m_motor.set(ShooterConstants.kIntakeSpeed);
+        setSpeed(ShooterConstants.kIntakeSpeed);
     }
 
     public void stopIntake()
     {
-        m_motor.set(0);
+        setSpeed(0);
     }
 
     public void periodic() {

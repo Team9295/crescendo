@@ -25,6 +25,8 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -38,9 +40,9 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here
-  private final DriveSubsystem m_driveSubsystem = new DriveSubsystem();
-  private final IntakeSubsystem m_intakeSubsystem = new IntakeSubsystem();
-  private final ShooterSubsystem m_shooterSubsystem = new ShooterSubsystem();
+  private DriveSubsystem m_driveSubsystem;
+  private IntakeSubsystem m_intakeSubsystem;
+  private ShooterSubsystem m_shooterSubsystem;
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final Joystick m_driverController = new Joystick(ControllerConstants.kDriverControllerPort);
@@ -48,14 +50,22 @@ public class RobotContainer {
 
   private final SendableChooser<Command> m_autoChooser = new SendableChooser<>();
 
+  private boolean enableDrive = true;
+  private boolean enableIntake = true;
+  private boolean enableShooter = false;
+
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+    if (enableDrive) { m_driveSubsystem = new DriveSubsystem(); }
+    if (enableIntake) { m_intakeSubsystem = new IntakeSubsystem(); }
+    if (enableShooter) { m_shooterSubsystem = new ShooterSubsystem(); }
+
     // Configure the trigger bindings
     configureBindings();
 
+    
     // create options
-    m_autoChooser.addOption("Simple Forward Distance Auto", new DistanceBasedAutoStraightCommand(m_driveSubsystem, 5));
-    m_autoChooser.addOption("Simple Forward Time Auto", new TimeBasedAutoStraightCommand(m_driveSubsystem, 1, 1));
+    // m_autoChooser.addOption("Simple Forward Time Auto", new TimeBasedAutoStraightCommand(m_driveSubsystem, 1, 1));
   }
 
   /**
@@ -73,42 +83,52 @@ public class RobotContainer {
      * | DRIVER CONTROLS |
      * =========================================
      */
-    m_driveSubsystem.setDefaultCommand(
+    if (enableDrive) {
+      m_driveSubsystem.setDefaultCommand(
         new ArcadeDriveCommand(m_driveSubsystem, () -> -m_driverController.getRawAxis(Axis.kRightY),
             () -> (m_driverController.getRawAxis(Axis.kLeftTrigger) + 1) / 2,
-            () -> (m_driverController.getRawAxis(Axis.kRightTrigger) + 1) / 2));
+            () -> (m_driverController.getRawAxis(Axis.kRightTrigger) + 1) / 2)
+      );
         
-        new JoystickButton(m_driverController, Button.kRightBumper).whileTrue(
-          new ArcadeDriveCommand(m_driveSubsystem,
-            () -> 0.0, () -> -DriveConstants.kFineTurningSpeed,
-            () -> DriveConstants.kFineTurningSpeed)
-        );
-        
-        new JoystickButton(m_driverController, Button.kLeftBumper).whileTrue(
-          new ArcadeDriveCommand(m_driveSubsystem,
-            () -> 0.0, () -> DriveConstants.kFineTurningSpeed,
-            () -> -DriveConstants.kFineTurningSpeed)
-        );
+      new JoystickButton(m_driverController, Button.kRightBumper).whileTrue(
+        new ArcadeDriveCommand(m_driveSubsystem,
+        () -> 0.0, () -> -1 * DriveConstants.kTurningMultiplier * DriveConstants.kFineTurningSpeed,
+        () -> DriveConstants.kTurningMultiplier * DriveConstants.kFineTurningSpeed)
+      );
+      
+      new JoystickButton(m_driverController, Button.kLeftBumper).whileTrue(
+        new ArcadeDriveCommand(m_driveSubsystem,
+          () -> 0.0, () -> DriveConstants.kTurningMultiplier * DriveConstants.kFineTurningSpeed,
+          () -> -1 * DriveConstants.kTurningMultiplier * DriveConstants.kFineTurningSpeed)
+      );
+    }
 
-        new JoystickButton(m_driverController, Button.kRightTriggerButton).whileTrue(
-          new IntakeSpeedCommand(m_intakeSubsystem, ShooterConstants.kIntakeSpeed)
-        );
-        new JoystickButton(m_driverController, Button.kRightTriggerButton).whileFalse(
-          new IntakeSpeedCommand(m_intakeSubsystem, 0)
-        );
+    if (enableIntake) {
+      m_intakeSubsystem.setDefaultCommand(new IntakeSpeedCommand(m_intakeSubsystem, () -> 0.0));
 
+      new JoystickButton(m_driverController, Button.kX).whileTrue(
+        new IntakeSpeedCommand(m_intakeSubsystem, () -> ShooterConstants.kIntakeSpeed)
+      );
+      
+      new JoystickButton(m_driverController, Button.kY).whileTrue(
+        new IntakeSpeedCommand(m_intakeSubsystem, () -> -1 *ShooterConstants.kIntakeSpeed)
+      );
+    }
+
+    if (enableShooter) {
         new JoystickButton(m_driverController, Button.kLeftTriggerButton).whileTrue(
           new ShooterSpeedCommand(m_shooterSubsystem, ShooterConstants.kShooterSpeed)
         );
         new JoystickButton(m_driverController, Button.kLeftTriggerButton).whileFalse(
           new ShooterSpeedCommand(m_shooterSubsystem, 0)
         );
+    }
      /*
      * =========================================
      * | OPERATOR CONTROLS |
      * =========================================
      */
-    
+
   }
 
   public Command getAutonomousCommand() {

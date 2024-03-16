@@ -10,14 +10,14 @@ import frc.robot.subsystems.ShooterSubsystem;
 public class IntakeSpeedCommand extends Command {
 
     private final IntakeSubsystem m_intakeSubsystem;
-    private double speed;
+    private Supplier <Double> speed;
     /**
 	 * Drive using speed inputs as a percentage output of the motor
 	 * 
 	 * @param intakeSubsystem The subsystem to be used
 	 * @param speed  Supplier of speed
 	 */
-	public IntakeSpeedCommand(IntakeSubsystem intakeSubsystem, double speed) {
+	public IntakeSpeedCommand(IntakeSubsystem intakeSubsystem, Supplier<Double> speed) {
         m_intakeSubsystem = intakeSubsystem;
         this.speed = speed;
 		addRequirements(m_intakeSubsystem);
@@ -27,6 +27,6 @@ public class IntakeSpeedCommand extends Command {
 	 * Update the motor outputs
 	 */
 	public void execute() {
-		m_intakeSubsystem.setSpeed(speed);
+		m_intakeSubsystem.setSpeed(speed.get());
 	}    
 }

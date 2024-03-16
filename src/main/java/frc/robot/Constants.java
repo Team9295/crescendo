@@ -50,24 +50,22 @@ public final class Constants {
 	}
 
 	public static final class DriveConstants {
-		public static final boolean kMasterLeftInvert = true;
-		public static final boolean kFollowerLeftOppose = true;
-		public static final boolean kMasterRightInvert = false; 
-		public static final boolean kFollowerRightOppose = false; 
+		public static final boolean kMasterLeftInvert = false;
+		public static final boolean kMasterRightInvert = true; 
 
 		//from last year
 		public static final int kSlotID = 0;
 		public static final double kSpeedLimitFactor = .7; 
-		public static final double kTurningMultiplier = 1; 
+		public static final double kTurningMultiplier = -1; 
 		public static final double kSpeedPowerMultipler = 1; 
 		public static final double kTurningPowerMultiper = 1;
 		public static final double kFineTurningSpeed = 0.075;
 
 		// set ports
-		public static final int kMasterLeftPort = 0;
-		public static final int kFollowerLeftPort = 0;
-		public static final int kMasterRightPort = 0;
-		public static final int kFollowerRightPort = 0;
+		public static final int kMasterLeftPort = 1;
+		public static final int kFollowerLeftPort = 2;
+		public static final int kMasterRightPort = 3;
+		public static final int kFollowerRightPort = 4;
 
 		private static final double gearRatio = 8.46; // double check (8.46:1?)
 		private static final double wheelDiameter = 6; // in inches
@@ -82,8 +80,10 @@ public final class Constants {
   	}
 
 	public static final class ArmConstants { // set values
-		public static final int kMotorPort = 0;
-		public static final boolean kMotorInverted = false;
+		public static final int kArmLeft = 8;
+		public static final boolean kMotorInverted1 = false;
+		public static final int kArmRight = 7;
+		public static final boolean kMotorInverted2 = true;
 		public static final int kMinPosition = 0;
 		public static final double kP = 0;
 		public static final double kI = 0;
@@ -95,9 +95,11 @@ public final class Constants {
 
 	public static final class ShooterConstants {
 		// set ports
-		public static final int kIntakePort = 0;
-		public static final int kShooterFarPort = 0;
-		public static final int kShooterNearPort = 0;
+		public static final int kIntakePort = 9;
+		public static final int kShooterRightPort = 5;
+		public static final int kShooterLeftPort = 6;
+		
+		public static final double kIntakeDeadzone = 0.1;
 
 		// set inverted
 		public static final boolean kIntakeInverted = false;
@@ -105,7 +107,7 @@ public final class Constants {
 		public static final boolean kShooterNearInverted = false;
 
 		// set speed?
-		public static final double kIntakeSpeed = 1;
+		public static final double kIntakeSpeed = 0.3;
 		public static final double kShooterSpeed = 1;
 	}
 
