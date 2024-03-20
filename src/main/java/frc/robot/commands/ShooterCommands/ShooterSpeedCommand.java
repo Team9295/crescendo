@@ -9,7 +9,7 @@ import frc.robot.subsystems.ShooterSubsystem;
 public class ShooterSpeedCommand extends Command {
 
 	private final ShooterSubsystem m_shooterSubsystem;
-    private double speed;
+    private Supplier <Double> speed;
 
 	/**
 	 * Drive using speed inputs as a percentage output of the motor
@@ -17,7 +17,7 @@ public class ShooterSpeedCommand extends Command {
 	 * @param shooterSubsystem The subsystem to be used
 	 * @param speed  Supplier of straight speed
 	 */
-	public ShooterSpeedCommand(ShooterSubsystem shooterSubsystem, double speed) {
+	public ShooterSpeedCommand(ShooterSubsystem shooterSubsystem, Supplier<Double> speed) {
 		m_shooterSubsystem = shooterSubsystem;
 		this.speed = speed;
 		addRequirements(m_shooterSubsystem);
@@ -27,6 +27,6 @@ public class ShooterSpeedCommand extends Command {
 	 * Update the motor outputs
 	 */
 	public void execute() {
-		m_shooterSubsystem.setSpeed(speed);
+		m_shooterSubsystem.setSpeed(speed.get());
 	}
 }

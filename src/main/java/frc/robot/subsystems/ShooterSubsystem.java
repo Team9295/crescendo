@@ -15,9 +15,9 @@ public class ShooterSubsystem extends SubsystemBase {
         shooterNearMotor.configFactoryDefault();
         shooterFarMotor.configFactoryDefault();
 
-        shooterNearMotor.setInverted(ShooterConstants.kShooterFarInverted);
-        shooterFarMotor.follow(shooterNearMotor);;
-        shooterFarMotor.setInverted(InvertType.OpposeMaster);
+        shooterNearMotor.setInverted(ShooterConstants.kShooterNearInverted);
+        shooterFarMotor.setInverted(ShooterConstants.kShooterFarInverted);
+        //shooterFarMotor.setInverted(InvertType.OpposeMaster);
     }    
 
     public void runShooter()
@@ -34,6 +34,7 @@ public class ShooterSubsystem extends SubsystemBase {
     
     public void setSpeed(double speed) {
         shooterNearMotor.set(VictorSPXControlMode.PercentOutput, speed);
+        shooterFarMotor.set(VictorSPXControlMode.PercentOutput, speed);
     }
 
 }

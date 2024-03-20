@@ -103,12 +103,12 @@ public final class Constants {
 
 		// set inverted
 		public static final boolean kIntakeInverted = false;
-		public static final boolean kShooterFarInverted = true;
+		public static final boolean kShooterFarInverted = false;
 		public static final boolean kShooterNearInverted = false;
 
 		// set speed?
-		public static final double kIntakeSpeed = 0.3;
-		public static final double kShooterSpeed = 1;
+		public static final double kIntakeSpeed = 0.5;
+		public static final double kShooterSpeed = 0.7;
 	}
 
 	public static final class LoggingConstants {

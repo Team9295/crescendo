@@ -16,6 +16,7 @@ import frc.robot.commands.ShooterCommands.ShooterSpeedCommand;
 import frc.robot.commands.ShooterCommands.IntakeSpeedCommand;
 import frc.robot.commands.ArmCommands.ArmSpeedCommand;
 import frc.robot.commands.ArmCommands.ArmPositionCommand;
+import frc.robot.subsystems.ArmSubsystem;
 // import climber commands
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -43,6 +44,7 @@ public class RobotContainer {
   private DriveSubsystem m_driveSubsystem;
   private IntakeSubsystem m_intakeSubsystem;
   private ShooterSubsystem m_shooterSubsystem;
+  private ArmSubsystem m_armSubsystem;
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final Joystick m_driverController = new Joystick(ControllerConstants.kDriverControllerPort);
@@ -52,13 +54,15 @@ public class RobotContainer {
 
   private boolean enableDrive = true;
   private boolean enableIntake = true;
-  private boolean enableShooter = false;
+  private boolean enableShooter = true;
+  private boolean enableArm = true;
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     if (enableDrive) { m_driveSubsystem = new DriveSubsystem(); }
     if (enableIntake) { m_intakeSubsystem = new IntakeSubsystem(); }
     if (enableShooter) { m_shooterSubsystem = new ShooterSubsystem(); }
+    if (enableArm) { m_armSubsystem = new ArmSubsystem(); }
 
     // Configure the trigger bindings
     configureBindings();
@@ -116,12 +120,17 @@ public class RobotContainer {
     }
 
     if (enableShooter) {
-        new JoystickButton(m_driverController, Button.kLeftTriggerButton).whileTrue(
-          new ShooterSpeedCommand(m_shooterSubsystem, ShooterConstants.kShooterSpeed)
+        new JoystickButton(m_driverController, Button.kA).whileTrue(
+          new ShooterSpeedCommand(m_shooterSubsystem, () -> ShooterConstants.kShooterSpeed)
         );
-        new JoystickButton(m_driverController, Button.kLeftTriggerButton).whileFalse(
-          new ShooterSpeedCommand(m_shooterSubsystem, 0)
-        );
+        new JoystickButton(m_driverController, Button.kA).whileFalse(
+          new ShooterSpeedCommand(m_shooterSubsystem, () -> 0.0)
+        );   
+    }
+
+    if (enableArm) {
+      m_armSubsystem.setDefaultCommand(
+        new ArmSpeedCommand(m_armSubsystem, () -> m_driverController.getRawAxis(Axis.kLeftY)));
     }
      /*
      * =========================================
