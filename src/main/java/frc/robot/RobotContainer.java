@@ -114,9 +114,9 @@ public class RobotContainer {
         new IntakeSpeedCommand(m_intakeSubsystem, () -> ShooterConstants.kIntakeSpeed)
       );
       
-      new JoystickButton(m_driverController, Button.kY).whileTrue(
-        new IntakeSpeedCommand(m_intakeSubsystem, () -> -1 *ShooterConstants.kIntakeSpeed)
-      );
+      // new JoystickButton(m_driverController, Button.kY).whileTrue(
+      //   new IntakeSpeedCommand(m_intakeSubsystem, () -> -1 *ShooterConstants.kIntakeSpeed)
+      // );
     }
 
     if (enableShooter) {

@@ -18,10 +18,7 @@ public class ArmSpeedCommand extends Command{
     }
 
     public void execute() {
-        double speed = Math.abs(m_speed.get()) > ControllerConstants.kDeadzone
-                ? m_speed.get()
-                : 0; 
-        m_ArmSubsystem.setSpeed(speed * ArmConstants.kSpeedLimitFactor);
+        m_ArmSubsystem.setSpeed(m_speed.get() * ArmConstants.kSpeedLimitFactor);
     }
 
     public void end(boolean interrupted) {

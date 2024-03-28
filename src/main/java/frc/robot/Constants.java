@@ -90,7 +90,7 @@ public final class Constants {
 		public static final double kIz = 0;
 		public static final double kD = 0;
 		public static final double kFF = 0;
-		public static final double kSpeedLimitFactor = 1;
+		public static final double kSpeedLimitFactor = 0.3;
 	}
 
 	public static final class ShooterConstants {
