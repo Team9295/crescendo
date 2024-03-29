@@ -33,7 +33,6 @@ public class ArmSubsystem extends SubsystemBase {
         m_motor2.setInverted(ArmConstants.kMotorInverted2); 
         m_motor2.setIdleMode(CANSparkMax.IdleMode.kBrake);
         m_motor2.enableVoltageCompensation(12);
-        //make sure these constants are set specifically for arm @EZRAAAA 
         m_pidController1.setP(ArmConstants.kP);
         m_pidController1.setI(ArmConstants.kI);
         m_pidController1.setIZone(ArmConstants.kIz);
