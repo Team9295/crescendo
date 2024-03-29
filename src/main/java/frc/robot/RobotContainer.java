@@ -15,9 +15,9 @@ import frc.robot.commands.Autonomous.*;
 import frc.robot.commands.ShooterCommands.ShooterSpeedCommand;
 import frc.robot.commands.ShooterCommands.IntakeSpeedCommand;
 import frc.robot.commands.ArmCommands.ArmSpeedCommand;
-import frc.robot.commands.ArmCommands.ArmPositionCommand;
+import frc.robot.commands.StopClimb; 
 import frc.robot.subsystems.ArmSubsystem;
-// import climber commands
+import frc.robot.subsystems.ClimbSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
@@ -45,6 +45,7 @@ public class RobotContainer {
   private IntakeSubsystem m_intakeSubsystem;
   private ShooterSubsystem m_shooterSubsystem;
   private ArmSubsystem m_armSubsystem;
+  private ClimbSubsystem m_climbSubsystem;
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final Joystick m_driverController = new Joystick(ControllerConstants.kDriverControllerPort);
@@ -56,6 +57,7 @@ public class RobotContainer {
   private boolean enableIntake = true;
   private boolean enableShooter = true;
   private boolean enableArm = true;
+  private boolean enableClimb = true; 
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -63,6 +65,8 @@ public class RobotContainer {
     if (enableIntake) { m_intakeSubsystem = new IntakeSubsystem(); }
     if (enableShooter) { m_shooterSubsystem = new ShooterSubsystem(); }
     if (enableArm) { m_armSubsystem = new ArmSubsystem(); }
+    if (enableClimb) { m_climbSubsystem = new ClimbSubsystem(); }
+
 
     // Configure the trigger bindings
     configureBindings();
@@ -114,9 +118,9 @@ public class RobotContainer {
         new IntakeSpeedCommand(m_intakeSubsystem, () -> ShooterConstants.kIntakeSpeed)
       );
       
-      // new JoystickButton(m_driverController, Button.kY).whileTrue(
-      //   new IntakeSpeedCommand(m_intakeSubsystem, () -> -1 *ShooterConstants.kIntakeSpeed)
-      // );
+       new JoystickButton(m_driverController, Button.kY).whileTrue(
+         new IntakeSpeedCommand(m_intakeSubsystem, () -> -1 *ShooterConstants.kIntakeSpeed)
+       );
     }
 
     if (enableShooter) {
