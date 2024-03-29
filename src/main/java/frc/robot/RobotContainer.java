@@ -45,7 +45,7 @@ public class RobotContainer {
   private IntakeSubsystem m_intakeSubsystem;
   private ShooterSubsystem m_shooterSubsystem;
   private ArmSubsystem m_armSubsystem;
-  private ClimbSubsystem m_climbSubsystem;
+  //private ClimbSubsystem m_climbSubsystem;
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final Joystick m_driverController = new Joystick(ControllerConstants.kDriverControllerPort);
@@ -56,8 +56,8 @@ public class RobotContainer {
   private boolean enableDrive = true;
   private boolean enableIntake = true;
   private boolean enableShooter = true;
-  private boolean enableArm = true;
-  private boolean enableClimb = true; 
+  private boolean enableArm = false;
+  //private boolean enableClimb = true; 
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -65,7 +65,7 @@ public class RobotContainer {
     if (enableIntake) { m_intakeSubsystem = new IntakeSubsystem(); }
     if (enableShooter) { m_shooterSubsystem = new ShooterSubsystem(); }
     if (enableArm) { m_armSubsystem = new ArmSubsystem(); }
-    if (enableClimb) { m_climbSubsystem = new ClimbSubsystem(); }
+    //if (enableClimb) { m_climbSubsystem = new ClimbSubsystem(); }
 
 
     // Configure the trigger bindings
@@ -134,7 +134,7 @@ public class RobotContainer {
 
     if (enableArm) {
       m_armSubsystem.setDefaultCommand(
-        new ArmSpeedCommand(m_armSubsystem, () -> m_driverController.getRawAxis(Axis.kLeftY)));
+        new ArmSpeedCommand(m_armSubsystem, () -> -m_driverController.getRawAxis(Axis.kLeftY)));
     }
      /*
      * =========================================
