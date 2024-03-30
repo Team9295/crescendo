@@ -15,7 +15,6 @@ import frc.robot.commands.Autonomous.*;
 import frc.robot.commands.ShooterCommands.ShooterSpeedCommand;
 import frc.robot.commands.ShooterCommands.IntakeSpeedCommand;
 import frc.robot.commands.ArmCommands.ArmSpeedCommand;
-import frc.robot.commands.StopClimb; 
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.ClimbSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
