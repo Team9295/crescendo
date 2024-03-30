@@ -11,18 +11,15 @@ public class ClimbSubsystem extends SubsystemBase{
     private final CANSparkMax rightClimbMotor = new CANSparkMax(ClimbConstants.kRightClimbPort, MotorType.kBrushless);
 
     public ClimbSubsystem() {
-        leftClimbMotor.restoreFactoryDefaults(); 
-        rightClimbMotor.restoreFactoryDefaults(); 
+        leftClimbMotor.restoreFactoryDefaults();
+        leftClimbMotor.setInverted(ClimbConstants.kLeftClimbInverted);
+        rightClimbMotor.restoreFactoryDefaults();
+        rightClimbMotor.setInverted(ClimbConstants.kRightClimbInverted);
     }
 
-    public void runClimb(double rspeed, double lspeed) {
-        leftClimbMotor.set(lspeed);
-        rightClimbMotor.set(rspeed);
-    }
-
-    public void stopClimb() {
-        leftClimbMotor.set(0);
-        rightClimbMotor.set(0);
+    public void setSpeed(double speed) {
+        leftClimbMotor.set(speed);
+        rightClimbMotor.set(speed);
     }
 
     @Override
@@ -30,7 +27,3 @@ public class ClimbSubsystem extends SubsystemBase{
         //smartdashboard stuffs
     }
 }
-
-
-
-
