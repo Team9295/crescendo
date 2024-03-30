@@ -14,6 +14,7 @@ import frc.robot.commands.ArcadeDriveCommand;
 import frc.robot.commands.Autonomous.*;
 import frc.robot.commands.ShooterCommands.ShooterSpeedCommand;
 import frc.robot.commands.ShooterCommands.IntakeSpeedCommand;
+import frc.robot.commands.ArmCommands.ArmPositionCommand;
 import frc.robot.commands.ArmCommands.ArmSpeedCommand;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.ClimbSubsystem;
@@ -54,8 +55,8 @@ public class RobotContainer {
 
   private boolean enableDrive = true;
   private boolean enableIntake = true;
-  private boolean enableShooter = true;
-  private boolean enableArm = false;
+  private boolean enableShooter = false;
+  private boolean enableArm = true;
   //private boolean enableClimb = true; 
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -132,8 +133,18 @@ public class RobotContainer {
     }
 
     if (enableArm) {
-      m_armSubsystem.setDefaultCommand(
-        new ArmSpeedCommand(m_armSubsystem, () -> -m_driverController.getRawAxis(Axis.kRightY)));
+      // m_armSubsystem.setDefaultCommand(
+      //   new ArmSpeedCommand(m_armSubsystem, () -> -1 * m_driverController.getRawAxis(Axis.kRightY))
+      // );
+
+      new JoystickButton(m_driverController, Button.kA).onTrue(
+        // new ArmPositionCommand(m_armSubsystem, 0.1)
+        new ArmSpeedCommand(m_armSubsystem, () -> 0.0)
+      );
+
+      new JoystickButton(m_driverController, Button.kB).onTrue(
+        new ArmPositionCommand(m_armSubsystem, 3.8)
+      );
     }
      /*
      * =========================================
@@ -145,5 +156,11 @@ public class RobotContainer {
 
   public Command getAutonomousCommand() {
     return m_autoChooser.getSelected();
+  }
+
+  public void periodic() {
+    if(enableArm) {
+      m_armSubsystem.periodic();
+    }
   }
 }
