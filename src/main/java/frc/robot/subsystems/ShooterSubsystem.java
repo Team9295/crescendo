@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.ctre.phoenix.motorcontrol.InvertType;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.VictorSPXControlMode;
 import frc.robot.Constants.ShooterConstants;
 
@@ -14,6 +15,9 @@ public class ShooterSubsystem extends SubsystemBase {
     public ShooterSubsystem() {
         shooterNearMotor.configFactoryDefault();
         shooterFarMotor.configFactoryDefault();
+        shooterNearMotor.setNeutralMode(NeutralMode.Brake);
+        shooterFarMotor.setNeutralMode(NeutralMode.Brake);
+
 
         shooterNearMotor.setInverted(ShooterConstants.kShooterNearInverted);
         shooterFarMotor.setInverted(ShooterConstants.kShooterFarInverted);
@@ -22,7 +26,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
     public void runShooter()
     {
-        setSpeed(ShooterConstants.kShooterSpeed);
+        setSpeed(ShooterConstants.kShooterSpeakerSpeed);
     }
 
     public void stopShooter()

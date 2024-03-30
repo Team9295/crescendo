@@ -55,9 +55,9 @@ public class RobotContainer {
 
   private final SendableChooser<Command> m_autoChooser = new SendableChooser<>();
 
-  private boolean enableDrive = false;
+  private boolean enableDrive = true;
   private boolean enableIntake = true;
-  private boolean enableShooter = false;
+  private boolean enableShooter = true;
   private boolean enableArm = true;
   //private boolean enableClimb = true; 
 
@@ -114,15 +114,21 @@ public class RobotContainer {
     }
 
     if (enableIntake) {
-      m_intakeSubsystem.setDefaultCommand(new IntakeSpeedCommand(m_intakeSubsystem, 0.0));
-
-      new JoystickButton(m_driverController, Button.kX).whileTrue(
+      new JoystickButton(m_driverController, Button.kX).onTrue(
         new IntakeSpeedCommand(m_intakeSubsystem, ShooterConstants.kIntakeSpeed)
       );
+
+      new JoystickButton(m_driverController, Button.kX).onFalse(
+        new IntakeSpeedCommand(m_intakeSubsystem, 0.0)
+      );
       
-       new JoystickButton(m_driverController, Button.kY).whileTrue(
+       new JoystickButton(m_driverController, Button.kY).onTrue(
          new IntakeSpeedCommand(m_intakeSubsystem, -1 *ShooterConstants.kIntakeSpeed)
        );
+
+      new JoystickButton(m_driverController, Button.kY).onFalse(
+        new IntakeSpeedCommand(m_intakeSubsystem, 0.0)
+      );
     }
 
     if (enableShooter) {
@@ -132,16 +138,37 @@ public class RobotContainer {
         new JoystickButton(m_driverController, Button.kA).onTrue(
           new SequentialCommandGroup(
             new ArmPositionCommand(m_armSubsystem, 3.8),
-            new WaitCommand(0.1),
+            new WaitCommand(0.5),
             new IntakeSpeedCommand(m_intakeSubsystem, -1 *ShooterConstants.kIntakeSpeed),
             new WaitCommand(0.1),
             new IntakeSpeedCommand(m_intakeSubsystem, 0),
-            new ShooterSpeedCommand(m_shooterSubsystem, ShooterConstants.kShooterSpeed),
-            new WaitCommand(0.1),
+            new ShooterSpeedCommand(m_shooterSubsystem, ShooterConstants.kShooterSpeakerSpeed),
+            new WaitCommand(0.5),
             new IntakeSpeedCommand(m_intakeSubsystem, ShooterConstants.kIntakeSpeed),
-            new WaitCommand(0.3),
-            new ArmPositionCommand(m_armSubsystem, 0.0),
-            new ShooterSpeedCommand(m_shooterSubsystem, 0.0)          
+            new WaitCommand(0.5),
+            new IntakeSpeedCommand(m_intakeSubsystem, 0),
+            new ShooterSpeedCommand(m_shooterSubsystem, 0.0) ,
+            new ArmSpeedCommand(m_armSubsystem, 0.0)
+          )
+        );
+
+        new JoystickButton(m_driverController, Button.kB).onTrue(
+          new SequentialCommandGroup(
+            new ArmPositionCommand(m_armSubsystem, 10.0),
+            new WaitCommand(2.0),
+            new IntakeSpeedCommand(m_intakeSubsystem, -1 *ShooterConstants.kIntakeSpeed),
+            new WaitCommand(0.1),
+            new IntakeSpeedCommand(m_intakeSubsystem, 0),
+            new ShooterSpeedCommand(m_shooterSubsystem, ShooterConstants.kShooterAmpSpeed),
+            new WaitCommand(1.5),
+            new IntakeSpeedCommand(m_intakeSubsystem, ShooterConstants.kIntakeSpeed),
+            new WaitCommand(0.8),
+            // new ArmPositionCommand(m_armSubsystem, 3.8),
+            new IntakeSpeedCommand(m_intakeSubsystem, 0),
+            new ShooterSpeedCommand(m_shooterSubsystem, 0.0),
+            new ArmSpeedCommand(m_armSubsystem, -0.2),
+            new WaitCommand(0.4),
+            new ArmSpeedCommand(m_armSubsystem, 0.0)
           )
         );
         // new JoystickButton(m_driverController, Button.kA).whileFalse(
@@ -154,14 +181,14 @@ public class RobotContainer {
       //   new ArmSpeedCommand(m_armSubsystem, () -> -1 * m_driverController.getRawAxis(Axis.kRightY))
       // );
 
-      new JoystickButton(m_driverController, Button.kA).onTrue(
-        // new ArmPositionCommand(m_armSubsystem, 0.1)
-        new ArmSpeedCommand(m_armSubsystem, () -> 0.0)
-      );
+      // new JoystickButton(m_driverController, Button.kA).onTrue(
+      //   // new ArmPositionCommand(m_armSubsystem, 0.1)
+      //   new ArmSpeedCommand(m_armSubsystem, () -> 0.0)
+      // );
 
-      new JoystickButton(m_driverController, Button.kB).onTrue(
-        new ArmPositionCommand(m_armSubsystem, 3.8)
-      );
+      // new JoystickButton(m_driverController, Button.kB).onTrue(
+      //   new ArmPositionCommand(m_armSubsystem, 3.8)
+      // );
     }
      /*
      * =========================================

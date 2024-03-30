@@ -111,7 +111,8 @@ public final class Constants {
 
 		// set speed?
 		public static final double kIntakeSpeed = 0.8;
-		public static final double kShooterSpeed = 0.7;
+		public static final double kShooterSpeakerSpeed = 0.7;
+		public static final double kShooterAmpSpeed = 0.2;
 	}
 
 	public static final class LoggingConstants {

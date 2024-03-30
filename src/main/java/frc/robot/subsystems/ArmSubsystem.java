@@ -30,7 +30,7 @@ public class ArmSubsystem extends SubsystemBase {
         m_motor1.setInverted(ArmConstants.kMotorInverted1); 
         m_motor1.setIdleMode(CANSparkMax.IdleMode.kBrake);
         m_motor1.enableVoltageCompensation(12);
-        // m_motor1.setClosedLoopRampRate(5);
+        // m_motor1.setClosedLoopRampRate(1);
         m_motor2.restoreFactoryDefaults();
         // m_motor2.setInverted(ArmConstants.kMotorInverted2); 
         m_motor2.setIdleMode(CANSparkMax.IdleMode.kBrake);
