@@ -28,7 +28,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -53,7 +55,7 @@ public class RobotContainer {
 
   private final SendableChooser<Command> m_autoChooser = new SendableChooser<>();
 
-  private boolean enableDrive = true;
+  private boolean enableDrive = false;
   private boolean enableIntake = true;
   private boolean enableShooter = false;
   private boolean enableArm = true;
@@ -112,24 +114,39 @@ public class RobotContainer {
     }
 
     if (enableIntake) {
-      m_intakeSubsystem.setDefaultCommand(new IntakeSpeedCommand(m_intakeSubsystem, () -> 0.0));
+      m_intakeSubsystem.setDefaultCommand(new IntakeSpeedCommand(m_intakeSubsystem, 0.0));
 
       new JoystickButton(m_driverController, Button.kX).whileTrue(
-        new IntakeSpeedCommand(m_intakeSubsystem, () -> ShooterConstants.kIntakeSpeed)
+        new IntakeSpeedCommand(m_intakeSubsystem, ShooterConstants.kIntakeSpeed)
       );
       
        new JoystickButton(m_driverController, Button.kY).whileTrue(
-         new IntakeSpeedCommand(m_intakeSubsystem, () -> -1 *ShooterConstants.kIntakeSpeed)
+         new IntakeSpeedCommand(m_intakeSubsystem, -1 *ShooterConstants.kIntakeSpeed)
        );
     }
 
     if (enableShooter) {
-        new JoystickButton(m_driverController, Button.kA).whileTrue(
-          new ShooterSpeedCommand(m_shooterSubsystem, () -> ShooterConstants.kShooterSpeed)
+        // new JoystickButton(m_driverController, Button.kA).whileTrue(
+        //   new ShooterSpeedCommand(m_shooterSubsystem, () -> ShooterConstants.kShooterSpeed)
+        // );
+        new JoystickButton(m_driverController, Button.kA).onTrue(
+          new SequentialCommandGroup(
+            new ArmPositionCommand(m_armSubsystem, 3.8),
+            new WaitCommand(0.1),
+            new IntakeSpeedCommand(m_intakeSubsystem, -1 *ShooterConstants.kIntakeSpeed),
+            new WaitCommand(0.1),
+            new IntakeSpeedCommand(m_intakeSubsystem, 0),
+            new ShooterSpeedCommand(m_shooterSubsystem, ShooterConstants.kShooterSpeed),
+            new WaitCommand(0.1),
+            new IntakeSpeedCommand(m_intakeSubsystem, ShooterConstants.kIntakeSpeed),
+            new WaitCommand(0.3),
+            new ArmPositionCommand(m_armSubsystem, 0.0),
+            new ShooterSpeedCommand(m_shooterSubsystem, 0.0)          
+          )
         );
-        new JoystickButton(m_driverController, Button.kA).whileFalse(
-          new ShooterSpeedCommand(m_shooterSubsystem, () -> 0.0)
-        );   
+        // new JoystickButton(m_driverController, Button.kA).whileFalse(
+        //   new ShooterSpeedCommand(m_shooterSubsystem, 0.0)
+        // );   
     }
 
     if (enableArm) {
