@@ -110,7 +110,7 @@ public final class Constants {
 		public static final boolean kShooterNearInverted = false;
 
 		// set speed?
-		public static final double kIntakeSpeed = 0.5;
+		public static final double kIntakeSpeed = 0.8;
 		public static final double kShooterSpeed = 0.7;
 	}
 

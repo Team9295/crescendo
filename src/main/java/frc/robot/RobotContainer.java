@@ -92,7 +92,7 @@ public class RobotContainer {
      */
     if (enableDrive) {
       m_driveSubsystem.setDefaultCommand(
-        new ArcadeDriveCommand(m_driveSubsystem, () -> -m_driverController.getRawAxis(Axis.kRightY),
+        new ArcadeDriveCommand(m_driveSubsystem, () -> -m_driverController.getRawAxis(Axis.kLeftY),
             () -> (m_driverController.getRawAxis(Axis.kLeftTrigger) + 1) / 2,
             () -> (m_driverController.getRawAxis(Axis.kRightTrigger) + 1) / 2)
       );
@@ -133,7 +133,7 @@ public class RobotContainer {
 
     if (enableArm) {
       m_armSubsystem.setDefaultCommand(
-        new ArmSpeedCommand(m_armSubsystem, () -> -m_driverController.getRawAxis(Axis.kLeftY)));
+        new ArmSpeedCommand(m_armSubsystem, () -> -m_driverController.getRawAxis(Axis.kRightY)));
     }
      /*
      * =========================================
