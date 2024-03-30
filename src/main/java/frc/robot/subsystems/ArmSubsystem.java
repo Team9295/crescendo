@@ -49,6 +49,11 @@ public class ArmSubsystem extends SubsystemBase {
         m_encoder2.setPosition(-ArmConstants.kMinPosition); 
     }
     
+    public void zeroEncoders() {
+        m_encoder1.setPosition(0);
+        m_encoder2.setPosition(0);
+    }
+
     public void periodic() {
         
     }
