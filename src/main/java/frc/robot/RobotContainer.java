@@ -172,10 +172,8 @@ public class RobotContainer {
       m_climbSubsystem.setDefaultCommand(
           new ClimbSpeedCommand(m_climbSubsystem, () -> m_operatorController.getRawAxis(Axis.kLeftY)));
 
-      new JoystickButton(m_operatorController, Button.kA)
-          .onTrue(new ClimbPositionCommand(m_climbSubsystem, ClimbConstants.ClimberState.BOTTOM));
       new JoystickButton(m_operatorController, Button.kY)
-          .onTrue(new ClimbPositionCommand(m_climbSubsystem, ClimbConstants.ClimberState.TOP));
+          .onTrue(new ClimbPositionCommand(m_climbSubsystem));
     }
 
   }

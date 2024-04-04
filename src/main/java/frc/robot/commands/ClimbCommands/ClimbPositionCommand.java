@@ -9,15 +9,27 @@ public class ClimbPositionCommand extends Command {
   private ClimbSubsystem climbSubsystem;
   private ClimberState targetState;
 
-  public ClimbPositionCommand(ClimbSubsystem climbSubsystem, ClimberState targetState) {
+  public ClimbPositionCommand(ClimbSubsystem climbSubsystem) {
     this.climbSubsystem = climbSubsystem;
-    this.targetState = targetState;
     addRequirements(climbSubsystem);
   }
 
   @Override
   public void execute() {
-    climbSubsystem.setPosition(targetState);
+    switch (climbSubsystem.getCurrentState()) {
+      case ZERO:
+        targetState = ClimberState.TOP;
+        climbSubsystem.setPosition(ClimberState.TOP);
+        break;
+      case TOP:
+        targetState = ClimberState.BOTTOM;
+        climbSubsystem.setPosition(ClimberState.BOTTOM);
+        break;
+      case BOTTOM:
+        targetState = ClimberState.TOP;
+        climbSubsystem.setPosition(ClimberState.TOP);
+        break;
+    }
   }
 
   @Override

@@ -20,6 +20,8 @@ public class ClimbSubsystem extends SubsystemBase {
   private SparkPIDController pidController = leftClimbMotor.getPIDController();
   private double setpoint;
 
+  private ClimberState currentState = ClimberState.ZERO;
+
   public ClimbSubsystem() {
     leftClimbMotor.restoreFactoryDefaults();
     leftClimbMotor.setInverted(ClimbConstants.kLeftClimbInverted);
@@ -45,7 +47,12 @@ public class ClimbSubsystem extends SubsystemBase {
     return leftEncoder.getPosition();
   }
 
+  public ClimberState getCurrentState() {
+    return currentState;
+  }
+
   public void setPosition(ClimberState targetState) {
+    currentState = targetState;
     setpoint = targetState.getPosition();
     pidController.setReference(targetState.getPosition(), ControlType.kPosition);
   }
