@@ -14,14 +14,16 @@ import frc.robot.Constants.ClimbConstants;
 import frc.robot.Constants.ControllerConstants;
 import frc.robot.Constants.ControllerConstants.Axis;
 import frc.robot.Constants.ControllerConstants.Button;
+import frc.robot.Constants.ControllerConstants.DPad;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.ShooterConstants;
+import frc.robot.Constants.ShooterConstants.ScoringTarget;
 import frc.robot.commands.ArcadeDriveCommand;
 import frc.robot.commands.ClimbSpeedCommand;
-import frc.robot.commands.ScoreAmpCommand;
-import frc.robot.commands.ScoreSpeakerCommand;
+import frc.robot.commands.ScoreCommand;
 import frc.robot.commands.ClimbCommands.ClimbPositionCommand;
 import frc.robot.commands.ShooterCommands.IntakeSpeedCommand;
+import frc.robot.commands.ShooterCommands.SetScoringTargetCommand;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.ClimbSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
@@ -137,11 +139,13 @@ public class RobotContainer {
     }
 
     if (enableShooter) {
-      new JoystickButton(m_driverController, Button.kA).onTrue(
-          new ScoreSpeakerCommand(m_armSubsystem, m_intakeSubsystem, m_shooterSubsystem));
+      new Trigger(() -> m_operatorController.getPOV() == DPad.kUp)
+          .onTrue(new SetScoringTargetCommand(m_shooterSubsystem, ScoringTarget.SPEAKER));
+      new Trigger(() -> m_operatorController.getPOV() == DPad.kDown)
+          .onTrue(new SetScoringTargetCommand(m_shooterSubsystem, ScoringTarget.AMP));
 
-      new JoystickButton(m_driverController, Button.kB).onTrue(
-          new ScoreAmpCommand(m_armSubsystem, m_intakeSubsystem, m_shooterSubsystem));
+      new JoystickButton(m_driverController, Button.kA)
+          .onTrue(new ScoreCommand(m_armSubsystem, m_intakeSubsystem, m_shooterSubsystem));
     }
 
     if (enableArm) {

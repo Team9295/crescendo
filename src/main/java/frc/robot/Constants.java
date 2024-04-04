@@ -153,6 +153,11 @@ public final class Constants {
     public static final double kIntakeSpeed = 0.8;
     public static final double kShooterSpeakerSpeed = 0.7;
     public static final double kShooterAmpSpeed = 0.2;
+
+    public enum ScoringTarget {
+      AMP,
+      SPEAKER
+    }
   }
 
   public static final class LoggingConstants {
