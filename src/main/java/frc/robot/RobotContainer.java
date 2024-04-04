@@ -13,6 +13,7 @@ import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.ArcadeDriveCommand;
 import frc.robot.commands.ClimbSpeedCommand;
 import frc.robot.commands.Autonomous.*;
+import frc.robot.commands.ClimbCommands.ClimbPositionCommand;
 import frc.robot.commands.ShooterCommands.ShooterSpeedCommand;
 import frc.robot.commands.ShooterCommands.IntakeSpeedCommand;
 import frc.robot.commands.ArmCommands.ArmPositionCommand;
@@ -97,8 +98,8 @@ public class RobotContainer {
     if (enableDrive) {
       m_driveSubsystem.setDefaultCommand(
         new ArcadeDriveCommand(m_driveSubsystem, () -> -m_driverController.getRawAxis(Axis.kLeftY),
-            () -> (m_driverController.getRawAxis(Axis.kLeftTrigger) + 1) / 2,
-            () -> (m_driverController.getRawAxis(Axis.kRightTrigger) + 1) / 2)
+            () -> -1 * (m_driverController.getRawAxis(Axis.kLeftTrigger) + 1) / 2,
+            () -> -1 * (m_driverController.getRawAxis(Axis.kRightTrigger) + 1) / 2)
       );
         
       new JoystickButton(m_driverController, Button.kRightBumper).whileTrue(
@@ -144,7 +145,7 @@ public class RobotContainer {
             new WaitCommand(0.1),
             new IntakeSpeedCommand(m_intakeSubsystem, 0),
             new ShooterSpeedCommand(m_shooterSubsystem, ShooterConstants.kShooterSpeakerSpeed),
-            new WaitCommand(0.5),
+            new WaitCommand(0.75),
             new IntakeSpeedCommand(m_intakeSubsystem, ShooterConstants.kIntakeSpeed),
             new WaitCommand(0.5),
             new IntakeSpeedCommand(m_intakeSubsystem, 0),
@@ -201,6 +202,9 @@ public class RobotContainer {
         new ClimbSpeedCommand(m_climbSubsystem, () -> m_operatorController.getRawAxis(Axis.kLeftY)
         )
       );
+
+      new JoystickButton(m_operatorController, Button.kA).onTrue(new ClimbPositionCommand(m_climbSubsystem, -1.0));
+      new JoystickButton(m_operatorController, Button.kY).onTrue(new ClimbPositionCommand(m_climbSubsystem, -279.0));
     }
 
   }
@@ -212,6 +216,10 @@ public class RobotContainer {
   public void periodic() {
     if(enableArm) {
       m_armSubsystem.periodic();
+    }
+
+    if(enableClimb) {
+      m_climbSubsystem.periodic();
     }
   }
 }

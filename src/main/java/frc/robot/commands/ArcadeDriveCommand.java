@@ -48,10 +48,10 @@ public class ArcadeDriveCommand extends Command {
 		// speedRight = Math.pow(speedRight * DriveConstants.kTurningMultiplier,
 		// DriveConstants.kTurningPowerMultiplier);
 		// }
-		if (speedStraight != 0) {
-			speedLeft = speedLeft * DriveConstants.kTurningMultiplier;
-			speedRight = speedRight * DriveConstants.kTurningMultiplier;
-		}
+		// if (speedStraight != 0) {
+		// 	speedLeft = speedLeft * DriveConstants.kTurningMultiplier;
+		// 	speedRight = speedRight * DriveConstants.kTurningMultiplier;
+		// }
 		m_driveSubsystem.arcadeDrive(speedStraight, speedLeft, speedRight);
 	}
 }

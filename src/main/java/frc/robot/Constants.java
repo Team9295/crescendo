@@ -59,7 +59,7 @@ public final class Constants {
 		public static final double kTurningMultiplier = -1; 
 		public static final double kSpeedPowerMultipler = 1; 
 		public static final double kTurningPowerMultiper = 1;
-		public static final double kFineTurningSpeed = 0.075;
+		public static final double kFineTurningSpeed = 0.2;
 
 		// set ports
 		public static final int kMasterLeftPort = 1;
