@@ -1,27 +1,27 @@
 package frc.robot.commands.ClimbCommands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
-import frc.robot.subsystems.ArmSubsystem;
+import frc.robot.Constants.ClimbConstants;
+import frc.robot.Constants.ClimbConstants.ClimberState;
 import frc.robot.subsystems.ClimbSubsystem;
 
 public class ClimbPositionCommand extends Command {
-    private ClimbSubsystem climbSubsystem;
-    private Double position;
+  private ClimbSubsystem climbSubsystem;
+  private ClimberState targetState;
 
-    public ClimbPositionCommand(ClimbSubsystem climbSubsystem, Double position) {
-        this.climbSubsystem = climbSubsystem;
-        this.position = position;
-        addRequirements(climbSubsystem);
-    }
+  public ClimbPositionCommand(ClimbSubsystem climbSubsystem, ClimberState targetState) {
+    this.climbSubsystem = climbSubsystem;
+    this.targetState = targetState;
+    addRequirements(climbSubsystem);
+  }
 
-    @Override
-    public void execute() {
-        climbSubsystem.setPosition(position);        
-    }
+  @Override
+  public void execute() {
+    climbSubsystem.setPosition(targetState);
+  }
 
-    @Override
-    public boolean isFinished() {
-        return Math.abs(position - climbSubsystem.getPosition()) < 1.0;
-    }
+  @Override
+  public boolean isFinished() {
+    return Math.abs(targetState.getPosition() - climbSubsystem.getPosition()) < ClimbConstants.kToleranceRotations;
+  }
 }

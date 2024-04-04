@@ -1,33 +1,33 @@
 package frc.robot.commands.ShooterCommands;
 
-import java.util.function.Supplier;
-
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
-import frc.robot.Constants.ControllerConstants;
 import frc.robot.subsystems.IntakeSubsystem;
-import frc.robot.subsystems.ShooterSubsystem;
 
-public class IntakeSpeedCommand extends InstantCommand {
+public class IntakeSpeedCommand extends Command {
 
-    private final IntakeSubsystem m_intakeSubsystem;
-    private double speed;
-    /**
-	 * Drive using speed inputs as a percentage output of the motor
-	 * 
-	 * @param intakeSubsystem The subsystem to be used
-	 * @param d  Supplier of speed
-	 */
-	public IntakeSpeedCommand(IntakeSubsystem intakeSubsystem, double d) {
-        m_intakeSubsystem = intakeSubsystem;
-        this.speed = d;
-		addRequirements(m_intakeSubsystem);
-	}
+  private final IntakeSubsystem intakeSubsystem;
+  private final double speed;
 
-	/**
-	 * Update the motor outputs
-	 */
-	public void execute() {
-		m_intakeSubsystem.setSpeed(speed);
-	}    
+  /**
+   * Drive using speed inputs as a percentage output of the motor
+   * 
+   * @param intakeSubsystem The subsystem to be used
+   * @param d               Supplier of speed
+   */
+  public IntakeSpeedCommand(IntakeSubsystem intakeSubsystem, double d) {
+    addRequirements(intakeSubsystem);
+
+    this.intakeSubsystem = intakeSubsystem;
+    this.speed = d;
+  }
+
+  @Override
+  public void initialize() {
+    intakeSubsystem.setSpeed(speed);
+  }
+
+  @Override
+  public void end(boolean interrupted) {
+    intakeSubsystem.setSpeed(0);
+  }
 }

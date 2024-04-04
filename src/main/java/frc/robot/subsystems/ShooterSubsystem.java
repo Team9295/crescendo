@@ -1,44 +1,42 @@
-package frc.robot.subsystems; 
+package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.can.VictorSPX;
-import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.VictorSPXControlMode;
-import frc.robot.Constants.ShooterConstants;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.ShooterConstants;
 
 public class ShooterSubsystem extends SubsystemBase {
-    private final VictorSPX shooterFarMotor = new VictorSPX(ShooterConstants.kShooterRightPort);
-    private final VictorSPX shooterNearMotor = new VictorSPX(ShooterConstants.kShooterLeftPort);
+  private final VictorSPX shooterFarMotor = new VictorSPX(ShooterConstants.kShooterRightPort);
+  private final VictorSPX shooterNearMotor = new VictorSPX(ShooterConstants.kShooterLeftPort);
 
-    public ShooterSubsystem() {
-        shooterNearMotor.configFactoryDefault();
-        shooterFarMotor.configFactoryDefault();
-        shooterNearMotor.setNeutralMode(NeutralMode.Brake);
-        shooterFarMotor.setNeutralMode(NeutralMode.Brake);
+  public ShooterSubsystem() {
+    shooterNearMotor.configFactoryDefault();
+    shooterFarMotor.configFactoryDefault();
+    shooterNearMotor.setNeutralMode(NeutralMode.Brake);
+    shooterFarMotor.setNeutralMode(NeutralMode.Brake);
 
+    shooterNearMotor.setInverted(ShooterConstants.kShooterNearInverted);
+    shooterFarMotor.setInverted(ShooterConstants.kShooterFarInverted); // TODO: this should probably just be a follow
+                                                                       // call?
+    // shooterFarMotor.setInverted(InvertType.OpposeMaster);
+  }
 
-        shooterNearMotor.setInverted(ShooterConstants.kShooterNearInverted);
-        shooterFarMotor.setInverted(ShooterConstants.kShooterFarInverted);
-        //shooterFarMotor.setInverted(InvertType.OpposeMaster);
-    }    
+  public void runShooter() {
+    setSpeed(ShooterConstants.kShooterSpeakerSpeed);
+  }
 
-    public void runShooter()
-    {
-        setSpeed(ShooterConstants.kShooterSpeakerSpeed);
-    }
+  public void stopShooter() {
+    setSpeed(0);
+  }
 
-    public void stopShooter()
-    {
-        setSpeed(0);
-    }
+  public void periodic() {
+  }
 
-    public void periodic() { }
-    
-    public void setSpeed(double speed) {
-        shooterNearMotor.set(VictorSPXControlMode.PercentOutput, speed);
-        shooterFarMotor.set(VictorSPXControlMode.PercentOutput, speed);
-    }
+  public void setSpeed(double speed) {
+    shooterNearMotor.set(VictorSPXControlMode.PercentOutput, speed);
+    shooterFarMotor.set(VictorSPXControlMode.PercentOutput, speed);
+  }
 
 }

@@ -1,12 +1,11 @@
 package frc.robot.commands.ShooterCommands;
 
-import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.subsystems.ShooterSubsystem;
 
-public class ShooterSpeedCommand extends Command {
+public class StopShooterCommand extends InstantCommand {
 
   private final ShooterSubsystem shooterSubsystem;
-  private final double speed;
 
   /**
    * Drive using speed inputs as a percentage output of the motor
@@ -14,15 +13,14 @@ public class ShooterSpeedCommand extends Command {
    * @param shooterSubsystem The subsystem to be used
    * @param speed            Supplier of straight speed
    */
-  public ShooterSpeedCommand(ShooterSubsystem shooterSubsystem, double speed) {
+  public StopShooterCommand(ShooterSubsystem shooterSubsystem) {
     addRequirements(shooterSubsystem);
 
     this.shooterSubsystem = shooterSubsystem;
-    this.speed = speed;
   }
 
   @Override
   public void execute() {
-    shooterSubsystem.setSpeed(speed);
+    shooterSubsystem.setSpeed(0);
   }
 }
