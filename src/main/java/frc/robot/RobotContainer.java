@@ -190,5 +190,9 @@ public class RobotContainer {
     if (enableClimb) {
       m_climbSubsystem.periodic();
     }
+
+    if (enableShooter) {
+      m_shooterSubsystem.periodic();
+    }
   }
 }

@@ -68,8 +68,16 @@ public class ClimbSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("climb setpoint", setpoint);
   }
 
+  public void printCurrentState() {
+    SmartDashboard.putBoolean("climbTop", currentState == ClimberState.TOP);
+    SmartDashboard.putBoolean("climbBottom", currentState == ClimberState.BOTTOM);
+    SmartDashboard.putBoolean("climbZero", currentState == ClimberState.ZERO);
+
+  }
+
   @Override
   public void periodic() {
     printPosition();
+    printCurrentState();
   }
 }

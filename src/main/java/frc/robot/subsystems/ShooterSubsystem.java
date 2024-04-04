@@ -4,6 +4,7 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.VictorSPXControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.Constants.ShooterConstants.ScoringTarget;
@@ -41,8 +42,13 @@ public class ShooterSubsystem extends SubsystemBase {
   public void stopShooter() {
     setSpeed(0);
   }
+  public void printTarget() {
+    SmartDashboard.putBoolean("targetAmp", scoringTarget == ScoringTarget.AMP);
+    SmartDashboard.putBoolean("targetSpeaker", scoringTarget == ScoringTarget.SPEAKER);
+  }
 
   public void periodic() {
+    printTarget();
   }
 
   public void setSpeed(double speed) {
