@@ -60,7 +60,7 @@ public class ArmSubsystem extends SubsystemBase {
   }
 
   public void printPosition() {
-    SmartDashboard.putNumber("arm target", m_setPoint.getPosition());
+    SmartDashboard.putNumber("arm target", m_setPoint != null ? m_setPoint.getPosition() : -9999);
     SmartDashboard.putNumber("arm position", m_encoder.getPosition());
   }
 
