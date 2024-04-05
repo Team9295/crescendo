@@ -22,7 +22,7 @@ public class ScoreAmpCommand extends SequentialCommandGroup {
         new ShooterSpeedCommand(shooterSubsystem, ShooterConstants.kShooterAmpSpeed).withTimeout(1.5),
         new IntakeSpeedCommand(intakeSubsystem, ShooterConstants.kIntakeSpeed).withTimeout(0.8),
         new StopShooterCommand(shooterSubsystem),
-        new ArmSpeedCommand(armSubsystem, -0.2).withTimeout(0.4),
+        new ArmSpeedCommand(armSubsystem, () -> -0.2).withTimeout(0.4),
         new StopArmCommand(armSubsystem));
   }
 }

@@ -1,0 +1,17 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "build robot code",
+      "type": "shell",
+      "command": "./gradlew build",
+      "group": "build"
+    },
+    {
+      "label": "deploy robot code",
+      "type": "shell",
+      "command": "./gradlew deploy",
+      "group": "deploy"
+    }
+  ]
+}
