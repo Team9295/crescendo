@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -18,13 +19,16 @@ import frc.robot.Constants.ControllerConstants.Button;
 import frc.robot.Constants.ControllerConstants.DPad;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.ShooterConstants;
+import frc.robot.Constants.ArmConstants.ArmState;
 import frc.robot.Constants.ShooterConstants.ScoringTarget;
 import frc.robot.commands.ArcadeDriveCommand;
 import frc.robot.commands.ClimbSpeedCommand;
 import frc.robot.commands.ScoreCommand;
+import frc.robot.commands.ArmCommands.ArmPositionCommand;
 import frc.robot.commands.ArmCommands.ArmSpeedCommand;
 import frc.robot.commands.ArmCommands.ArmZeroPositionCommand;
-import frc.robot.commands.Autonomous.AutoShootLeave;
+import frc.robot.commands.Autonomous.AutoShootLeaveBlue;
+import frc.robot.commands.Autonomous.AutoShootLeaveRed;
 import frc.robot.commands.Autonomous.AutoShootTwo;
 import frc.robot.commands.ClimbCommands.ClimbPositionCommand;
 import frc.robot.commands.ClimbCommands.ClimbZeroPositionCommand;
@@ -93,12 +97,18 @@ public class RobotContainer {
 
     // create options
     m_autoChooser.setDefaultOption(
-        "ShootLeave",
-        new AutoShootLeave(m_driveSubsystem, m_armSubsystem, m_shooterSubsystem, m_intakeSubsystem));
+        "RedShootLeave",
+        new AutoShootLeaveRed(m_driveSubsystem, m_armSubsystem, m_shooterSubsystem, m_intakeSubsystem));
+
+    m_autoChooser.addOption(
+      "BlueShootLeave", 
+        new AutoShootLeaveBlue(m_driveSubsystem, m_armSubsystem, m_shooterSubsystem, m_intakeSubsystem));
 
     m_autoChooser.addOption(
         "ShootTwo",
         new AutoShootTwo(m_driveSubsystem, m_armSubsystem, m_shooterSubsystem, m_intakeSubsystem));
+
+    SmartDashboard.putData("auto", m_autoChooser);
   }
 
   /**
@@ -146,7 +156,10 @@ public class RobotContainer {
 
       // TODO: maybe rest at speaker shooting height and drop down to 0 when intaking?
       new JoystickButton(m_driverController, Button.kX).whileTrue(
-          new IntakeSpeedCommand(m_intakeSubsystem, ShooterConstants.kIntakeSpeed));
+          // new SequentialCommandGroup(
+          //   new ArmSpeedCommand(m_armSubsystem, () -> 0.0),
+            new IntakeSpeedCommand(m_intakeSubsystem, ShooterConstants.kIntakeSpeed)//)
+          );
       new JoystickButton(m_driverController, Button.kY).whileTrue(
           new IntakeSpeedCommand(m_intakeSubsystem, -1 * ShooterConstants.kIntakeSpeed));
     }
@@ -167,8 +180,11 @@ public class RobotContainer {
     }
 
     if (enableArm) {
-      m_armSubsystem.setDefaultCommand(
-          new ArmSpeedCommand(m_armSubsystem, () -> -1 * m_operatorController.getRawAxis(Axis.kLeftY)));
+      new Trigger(() -> Math.abs(m_operatorController.getRawAxis(Axis.kLeftY)) > ControllerConstants.kDeadzone).whileTrue(
+        new ArmSpeedCommand(m_armSubsystem, () -> -1 * m_operatorController.getRawAxis(Axis.kLeftY)));
+          
+          new JoystickButton(m_driverController, Button.kB)
+          .onTrue(new ArmPositionCommand(m_armSubsystem, ArmState.RESTING));
     }
     /*
      * =========================================
@@ -176,7 +192,7 @@ public class RobotContainer {
      * =========================================
      */
     if (enableClimb) {
-      m_climbSubsystem.setDefaultCommand(
+      new Trigger(() -> Math.abs(m_operatorController.getRawAxis(Axis.kRightY)) > ControllerConstants.kDeadzone).whileTrue(
           new ClimbSpeedCommand(m_climbSubsystem, () -> m_operatorController.getRawAxis(Axis.kRightY)));
 
       new JoystickButton(m_operatorController, Button.kY)
@@ -185,9 +201,9 @@ public class RobotContainer {
 
   }
 
-  public Command getAutonomousCommand() {
-    return m_autoChooser.getSelected();
-  }
+   public Command getAutonomousCommand() {
+     return m_autoChooser.getSelected();
+   }
 
   public void periodic() {
     if (enableDrive) {

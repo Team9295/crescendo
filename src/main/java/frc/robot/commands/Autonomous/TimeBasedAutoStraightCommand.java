@@ -6,37 +6,21 @@ import edu.wpi.first.wpilibj.Timer;
 
 public class TimeBasedAutoStraightCommand extends Command{
     private final DriveSubsystem m_driveSubsystem;
-    private final double m_seconds;
     private final double m_speed;
-    private final Timer m_timer = new Timer();
 
-    public TimeBasedAutoStraightCommand(DriveSubsystem driveSubsystem, double seconds, double speed) {
+    public TimeBasedAutoStraightCommand(DriveSubsystem driveSubsystem, double speed) {
+        addRequirements(driveSubsystem);
         m_driveSubsystem = driveSubsystem;
-        m_seconds = seconds;
         m_speed = speed;
     }
 
-    public void initalize() {
-        m_timer.reset();
-        m_timer.start();
-    }
-
+    @Override
     public void execute() {
-        System.out.println("CURRENT TIMER IS AT "+m_timer.get());
-        while (m_timer.get() < m_seconds){
-            m_driveSubsystem.tankDrive(m_speed, m_speed);
-        }
+        m_driveSubsystem.tankDrive(m_speed, m_speed+0.2);
     }
 
-    public boolean isFinished() {
-        if (m_timer.get() >= m_seconds) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    public void end() {
+    @Override
+    public void end(boolean interrupted) {
         m_driveSubsystem.tankDrive(0, 0);
     }
 }

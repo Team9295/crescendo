@@ -1,11 +1,11 @@
 package frc.robot.commands.ArmCommands;
 
-import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.ArmConstants;
 import frc.robot.Constants.ArmConstants.ArmState;
 import frc.robot.subsystems.ArmSubsystem;
 
-public class ArmPositionCommand extends InstantCommand {
+public class ArmPositionCommand extends Command {
   private ArmSubsystem armSubsystem;
   private ArmState targetState;
 

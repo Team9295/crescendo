@@ -1,19 +1,32 @@
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import frc.robot.Constants.ShooterConstants.ScoringTarget;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 
-public class ScoreCommand extends SequentialCommandGroup {
+public class ScoreCommand extends InstantCommand {
+  private ArmSubsystem armSubsystem;
+  private IntakeSubsystem intakeSubsystem;
+  private ShooterSubsystem shooterSubsystem;
+
   public ScoreCommand(ArmSubsystem armSubsystem, IntakeSubsystem intakeSubsystem,
       ShooterSubsystem shooterSubsystem) {
-    switch (shooterSubsystem.getScoringTarget()) {
+        this.armSubsystem = armSubsystem;
+        this.intakeSubsystem = intakeSubsystem;
+        this.shooterSubsystem = shooterSubsystem;
+  }
+
+  @Override public void execute() {
+      switch (shooterSubsystem.getScoringTarget()) {
       case AMP:
-        addCommands(new ScoreAmpCommand(armSubsystem, intakeSubsystem, shooterSubsystem));
+      CommandScheduler.getInstance().schedule(new ScoreAmpCommand(armSubsystem, intakeSubsystem, shooterSubsystem));
+        
         break;
       case SPEAKER:
-        addCommands(new ScoreSpeakerCommand(armSubsystem, intakeSubsystem, shooterSubsystem));
+        CommandScheduler.getInstance().schedule(new ScoreSpeakerCommand(armSubsystem, intakeSubsystem, shooterSubsystem));
         break;
     }
   }

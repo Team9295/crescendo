@@ -56,6 +56,7 @@ public class ArmSubsystem extends SubsystemBase {
 
   public void setPosition(ArmState targetState) {
     m_setPoint = targetState;
+    SmartDashboard.putNumber("armsetposition", targetState.getPosition());
     m_pidController.setReference(targetState.getPosition(), ControlType.kPosition);
   }
 

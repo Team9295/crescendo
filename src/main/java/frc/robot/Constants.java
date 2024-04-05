@@ -59,7 +59,7 @@ public final class Constants {
 
     // from last year
     public static final int kSlotID = 0;
-    public static final double kSpeedLimitFactor = .7;
+    public static final double kSpeedLimitFactor = 1.0;
     public static final double kTurningMultiplier = -1;
     public static final double kSpeedPowerMultipler = 1;
     public static final double kTurningPowerMultiper = 1;
@@ -90,7 +90,7 @@ public final class Constants {
     public enum ClimberState {
       ZERO(0.0),
       BOTTOM(-1.0),
-      TOP(-279.0);
+      TOP(-238.0);
 
       final double position;
 
@@ -120,9 +120,9 @@ public final class Constants {
 
     public enum ArmState {
       ZERO(0.0),
-      RESTING(0.0),
-      SCORE_AMP(10.0),
-      SCORE_SPEAKER(3.8);
+      RESTING(10.0),
+      SCORE_AMP(10.5),
+      SCORE_SPEAKER(4.4);
 
       final double position;
 
@@ -152,7 +152,7 @@ public final class Constants {
     // set speed?
     public static final double kIntakeSpeed = 0.8;
     public static final double kShooterSpeakerSpeed = 0.7;
-    public static final double kShooterAmpSpeed = 0.2;
+    public static final double kShooterAmpSpeed = 0.6;
 
     public enum ScoringTarget {
       AMP,

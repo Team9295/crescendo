@@ -68,8 +68,20 @@ public class ShooterSubsystem extends SubsystemBase {
   }
 
   public void setSpeed(double speed) {
-    shooterNearMotor.set(VictorSPXControlMode.PercentOutput, speed + speedModifier);
-    shooterFarMotor.set(VictorSPXControlMode.PercentOutput, speed + speedModifier);
+    double speedToSet = speed + speedModifier;
+    if (speed == 0) { speedToSet = 0; }
+    shooterNearMotor.set(VictorSPXControlMode.PercentOutput, speedToSet);
+    shooterFarMotor.set(VictorSPXControlMode.PercentOutput, speedToSet);
+  }
+
+  public void setSpeed(double topSpeed, double bottomSpeed) {
+        double speedToSetTop = topSpeed + speedModifier;
+    if (topSpeed == 0) { speedToSetTop = 0; }
+        double speedToSetBottom = bottomSpeed + speedModifier;
+    if (bottomSpeed == 0) { speedToSetBottom = 0; }
+      shooterNearMotor.set(VictorSPXControlMode.PercentOutput, speedToSetTop);
+      shooterFarMotor.set(VictorSPXControlMode.PercentOutput, speedToSetBottom);
+      
   }
 
 }

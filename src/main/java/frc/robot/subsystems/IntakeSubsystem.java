@@ -41,6 +41,15 @@ public class IntakeSubsystem extends SubsystemBase {
   }
 
   public void setSpeed(double speed) {
-    m_motor.set(speed + speedModifier);
+    double speedToSet = speed;
+    if(speed > 0) {
+      speedToSet += speedModifier;
+    } else if (speed < 0) {
+      speedToSet -= speedModifier;
+    } else {
+      speedToSet = 0;
+    }
+
+    m_motor.set(speedToSet);
   }
 }
