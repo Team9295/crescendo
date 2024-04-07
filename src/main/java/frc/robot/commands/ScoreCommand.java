@@ -2,7 +2,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import frc.robot.Constants.ShooterConstants.ScoringTarget;
+import frc.robot.Constants.ArmConstants.ArmState;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
@@ -26,7 +26,7 @@ public class ScoreCommand extends InstantCommand {
         
         break;
       case SPEAKER:
-        CommandScheduler.getInstance().schedule(new ScoreSpeakerCommand(armSubsystem, intakeSubsystem, shooterSubsystem));
+        CommandScheduler.getInstance().schedule(new ScoreSpeakerCommand(armSubsystem, intakeSubsystem, shooterSubsystem, ArmState.SCORE_SPEAKER_AUTO));
         break;
     }
   }

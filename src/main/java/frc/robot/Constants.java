@@ -90,7 +90,7 @@ public final class Constants {
     public enum ClimberState {
       ZERO(0.0),
       BOTTOM(-1.0),
-      TOP(-238.0);
+      TOP(-146.4);
 
       final double position;
 
@@ -122,7 +122,9 @@ public final class Constants {
       ZERO(0.0),
       RESTING(10.0),
       SCORE_AMP(10.5),
-      SCORE_SPEAKER(4.4);
+      SCORE_SPEAKER(4.4),
+      SCORE_SPEAKER_AUTO(4.8),
+      SCORE_SPEAKER_AUTO_2(5.1);
 
       final double position;
 

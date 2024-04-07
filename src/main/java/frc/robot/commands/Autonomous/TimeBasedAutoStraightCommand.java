@@ -2,7 +2,6 @@ package frc.robot.commands.Autonomous;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.DriveSubsystem;
-import edu.wpi.first.wpilibj.Timer;
 
 public class TimeBasedAutoStraightCommand extends Command{
     private final DriveSubsystem m_driveSubsystem;
@@ -16,7 +15,12 @@ public class TimeBasedAutoStraightCommand extends Command{
 
     @Override
     public void execute() {
-        m_driveSubsystem.tankDrive(m_speed, m_speed+0.2);
+        double speedToSet = m_speed + 0.2;
+        if (m_speed < 0) {
+            speedToSet = speedToSet - 0.4;
+        }
+        m_driveSubsystem.tankDrive(m_speed, speedToSet);
+        // when going forwar need to add backward subtract
     }
 
     @Override

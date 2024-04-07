@@ -28,6 +28,6 @@ public class IntakeSpeedCommand extends Command {
 
   @Override
   public void end(boolean interrupted) {
-    intakeSubsystem.setSpeed(0);
+    intakeSubsystem.stopIntake();
   }
 }

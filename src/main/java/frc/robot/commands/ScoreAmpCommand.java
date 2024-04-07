@@ -8,7 +8,6 @@ import frc.robot.commands.ArmCommands.ArmSpeedCommand;
 import frc.robot.commands.ArmCommands.StopArmCommand;
 import frc.robot.commands.ShooterCommands.IntakeSpeedCommand;
 import frc.robot.commands.ShooterCommands.ShooterAmpSpeedCommand;
-import frc.robot.commands.ShooterCommands.ShooterSpeedCommand;
 import frc.robot.commands.ShooterCommands.StopShooterCommand;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;

@@ -9,17 +9,16 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.Constants.ArmConstants.ArmState;
 import frc.robot.Constants.ControllerConstants;
 import frc.robot.Constants.ControllerConstants.Axis;
 import frc.robot.Constants.ControllerConstants.Button;
 import frc.robot.Constants.ControllerConstants.DPad;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.ShooterConstants;
-import frc.robot.Constants.ArmConstants.ArmState;
 import frc.robot.Constants.ShooterConstants.ScoringTarget;
 import frc.robot.commands.ArcadeDriveCommand;
 import frc.robot.commands.ClimbSpeedCommand;
@@ -97,16 +96,16 @@ public class RobotContainer {
 
     // create options
     m_autoChooser.setDefaultOption(
-        "RedShootLeave",
-        new AutoShootLeaveRed(m_driveSubsystem, m_armSubsystem, m_shooterSubsystem, m_intakeSubsystem));
+      "ShootTwo",
+        new AutoShootTwo(m_driveSubsystem, m_armSubsystem, m_shooterSubsystem, m_intakeSubsystem));
 
     m_autoChooser.addOption(
       "BlueShootLeave", 
         new AutoShootLeaveBlue(m_driveSubsystem, m_armSubsystem, m_shooterSubsystem, m_intakeSubsystem));
 
     m_autoChooser.addOption(
-        "ShootTwo",
-        new AutoShootTwo(m_driveSubsystem, m_armSubsystem, m_shooterSubsystem, m_intakeSubsystem));
+        "RedShootLeave",
+        new AutoShootLeaveRed(m_driveSubsystem, m_armSubsystem, m_shooterSubsystem, m_intakeSubsystem));
 
     SmartDashboard.putData("auto", m_autoChooser);
   }

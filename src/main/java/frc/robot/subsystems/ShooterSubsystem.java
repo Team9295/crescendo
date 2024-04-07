@@ -45,10 +45,6 @@ public class ShooterSubsystem extends SubsystemBase {
     speedModifier -= 0.1;
   }
 
-  public void runShooter() {
-    setSpeed(ShooterConstants.kShooterSpeakerSpeed + speedModifier);
-  }
-
   public void stopShooter() {
     setSpeed(0);
   }
