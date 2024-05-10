@@ -26,7 +26,7 @@ public class ScoreCommand extends InstantCommand {
         
         break;
       case SPEAKER:
-        CommandScheduler.getInstance().schedule(new ScoreSpeakerCommand(armSubsystem, intakeSubsystem, shooterSubsystem, ArmState.SCORE_SPEAKER_AUTO));
+        CommandScheduler.getInstance().schedule(new ScoreSpeakerCommand(armSubsystem, intakeSubsystem, shooterSubsystem, ArmState.SCORE_SPEAKER_AUTO_2));
         break;
     }
   }

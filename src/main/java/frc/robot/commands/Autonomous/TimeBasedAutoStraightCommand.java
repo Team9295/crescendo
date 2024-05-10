@@ -15,9 +15,9 @@ public class TimeBasedAutoStraightCommand extends Command{
 
     @Override
     public void execute() {
-        double speedToSet = m_speed + 0.2;
+        double speedToSet = m_speed; //+ 0.2;
         if (m_speed < 0) {
-            speedToSet = speedToSet - 0.4;
+            speedToSet = speedToSet; // - 0.4;
         }
         m_driveSubsystem.tankDrive(m_speed, speedToSet);
         // when going forwar need to add backward subtract
