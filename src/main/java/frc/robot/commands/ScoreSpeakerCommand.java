@@ -15,10 +15,8 @@ import frc.robot.subsystems.ShooterSubsystem;
 public class ScoreSpeakerCommand extends SequentialCommandGroup {
   public ScoreSpeakerCommand(ArmSubsystem armSubsystem, IntakeSubsystem intakeSubsystem,
       ShooterSubsystem shooterSubsystem, ArmState armState) {
-        System.out.println("scoring in speaker");
-
     addCommands(
-        new ArmPositionCommand(armSubsystem, armState).withTimeout(0.5),
+        new ArmPositionCommand(armSubsystem, armState),
         new IntakeSpeedCommand(intakeSubsystem, -1 * ShooterConstants.kIntakeSpeed).withTimeout(0.1),
         new ShooterSpeedCommand(shooterSubsystem, ShooterConstants.kShooterSpeakerSpeed).withTimeout(1.0),
         new IntakeSpeedCommand(intakeSubsystem, ShooterConstants.kIntakeSpeed).withTimeout(1.0),

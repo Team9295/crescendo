@@ -26,14 +26,15 @@ public class ArmSubsystem extends SubsystemBase {
     m_motor1.restoreFactoryDefaults();
     m_motor1.setInverted(ArmConstants.kMotorInverted1);
     m_motor1.setIdleMode(CANSparkMax.IdleMode.kBrake);
-    m_motor1.enableVoltageCompensation(12);
+    m_motor1.enableVoltageCompensation(8);
 
     m_motor2.restoreFactoryDefaults();
     m_motor2.setIdleMode(CANSparkMax.IdleMode.kBrake);
-    m_motor2.enableVoltageCompensation(12);
+    m_motor2.enableVoltageCompensation(8);
     m_motor2.follow(m_motor1, true);
 
     m_pidController.setOutputRange(-1 * ArmConstants.kSpeedLimitFactor, ArmConstants.kSpeedLimitFactor);
+    //m_pidController.setOutputRange(-0.4, 0.4);
     m_pidController.setP(ArmConstants.kP);
     m_pidController.setI(ArmConstants.kI);
     m_pidController.setIZone(ArmConstants.kIz);
@@ -54,6 +55,10 @@ public class ArmSubsystem extends SubsystemBase {
     return m_encoder.getPosition();
   }
 
+  public double getClosedLoopError() {
+    return Math.abs(m_encoder.getPosition() - m_setPoint.getPosition()); 
+  }
+
   public void setPosition(ArmState targetState) {
     m_setPoint = targetState;
     SmartDashboard.putNumber("armsetposition", targetState.getPosition());
@@ -66,8 +71,8 @@ public class ArmSubsystem extends SubsystemBase {
   }
 
   public void printSpeed() {
-    SmartDashboard.putNumber("arm speed 1", m_motor1.get());
-    SmartDashboard.putNumber("arm speed 2", m_motor2.get());
+    SmartDashboard.putNumber("arm speed 1", m_motor1.getAppliedOutput());
+    SmartDashboard.putNumber("arm speed 2", m_motor2.getAppliedOutput());
   }
 
   public void periodic() {
