@@ -149,9 +149,9 @@ public class RobotContainer {
 
     if (enableIntake) {
       new JoystickButton(m_operatorController, Button.kLeftBumper)
-          .onTrue(new InstantCommand(() -> m_intakeSubsystem.incrementSpeedModifier(), m_intakeSubsystem));
-      new JoystickButton(m_operatorController, Button.kRightBumper)
           .onTrue(new InstantCommand(() -> m_intakeSubsystem.decrementSpeedModifier(), m_intakeSubsystem));
+      new JoystickButton(m_operatorController, Button.kRightBumper)
+          .onTrue(new InstantCommand(() -> m_intakeSubsystem.incrementSpeedModifier(), m_intakeSubsystem));
 
       // TODO: maybe rest at speaker shooting height and drop down to 0 when intaking?
       new JoystickButton(m_driverController, Button.kX).whileTrue(
@@ -170,9 +170,9 @@ public class RobotContainer {
           .onTrue(new SetScoringTargetCommand(m_shooterSubsystem, ScoringTarget.AMP));
 
       new Trigger(() -> Math.abs(m_operatorController.getRawAxis(Axis.kLeftTrigger)) > 0)
-          .onTrue(new InstantCommand(() -> m_shooterSubsystem.incrementSpeedModifier(), m_shooterSubsystem));
-      new Trigger(() -> Math.abs(m_operatorController.getRawAxis(Axis.kRightTrigger)) > 0)
           .onTrue(new InstantCommand(() -> m_shooterSubsystem.decrementSpeedModifier(), m_shooterSubsystem));
+      new Trigger(() -> Math.abs(m_operatorController.getRawAxis(Axis.kRightTrigger)) > 0)
+          .onTrue(new InstantCommand(() -> m_shooterSubsystem.incrementSpeedModifier(), m_shooterSubsystem));
 
       new JoystickButton(m_driverController, Button.kA)
           .onTrue(new ScoreCommand(m_armSubsystem, m_intakeSubsystem, m_shooterSubsystem));
