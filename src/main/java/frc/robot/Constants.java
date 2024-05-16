@@ -110,10 +110,10 @@ public final class Constants {
     public static final int kArmRight = 7;
     public static final boolean kMotorInverted2 = true;
     public static final int kMinPosition = 0;
-    public static final double kP = 6.5; //more p 
+    public static final double kP = 6.8; //more p 
     public static final double kI = 0.0;//003;
     public static final double kIz = 0;
-    public static final double kD = 4.2; //change as needed
+    public static final double kD = 4.7; //change as needed
     public static final double kFF = 0.07;
     public static final double kSpeedLimitFactor = 0.5;
     public static final double kToleranceRotations = 0.2;
@@ -125,7 +125,7 @@ public final class Constants {
       SCORE_AMP(17.2), //increase more
       SCORE_SPEAKER(4.4),
       SCORE_SPEAKER_AUTO(4.8),
-      SCORE_SPEAKER_AUTO_2(5.1);
+      SCORE_SPEAKER_AUTO_2(6.3);//5.4);
 
       final double position;
 
