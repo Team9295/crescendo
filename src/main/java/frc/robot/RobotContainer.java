@@ -149,9 +149,9 @@ public class RobotContainer {
 
     if (enableIntake) {
       new JoystickButton(m_operatorController, Button.kLeftBumper)
-          .onTrue(new InstantCommand(() -> m_intakeSubsystem.incrementSpeedModifier(), m_intakeSubsystem));
-      new JoystickButton(m_operatorController, Button.kRightBumper)
           .onTrue(new InstantCommand(() -> m_intakeSubsystem.decrementSpeedModifier(), m_intakeSubsystem));
+      new JoystickButton(m_operatorController, Button.kRightBumper)
+          .onTrue(new InstantCommand(() -> m_intakeSubsystem.incrementSpeedModifier(), m_intakeSubsystem));
 
       // TODO: maybe rest at speaker shooting height and drop down to 0 when intaking?
       new JoystickButton(m_driverController, Button.kX).whileTrue(
