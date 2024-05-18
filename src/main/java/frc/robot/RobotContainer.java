@@ -95,7 +95,7 @@ public class RobotContainer {
     SmartDashboard.putData("Zero Climber", new ClimbZeroPositionCommand(m_climbSubsystem));
 
     // create options
-    m_autoChooser.setDefaultOption(
+    m_autoChooser.addOption(//setDefaultOption(
       "ShootTwo",
         new AutoShootTwo(m_driveSubsystem, m_armSubsystem, m_shooterSubsystem, m_intakeSubsystem));
 
@@ -103,7 +103,7 @@ public class RobotContainer {
       "BlueShootLeave", 
         new AutoShootLeaveBlue(m_driveSubsystem, m_armSubsystem, m_shooterSubsystem, m_intakeSubsystem));
 
-    m_autoChooser.addOption(
+    m_autoChooser.setDefaultOption(//addOption(
         "RedShootLeave",
         new AutoShootLeaveRed(m_driveSubsystem, m_armSubsystem, m_shooterSubsystem, m_intakeSubsystem));
 
@@ -133,8 +133,8 @@ public class RobotContainer {
     if (enableDrive) {
       m_driveSubsystem.setDefaultCommand(
           new ArcadeDriveCommand(m_driveSubsystem, () -> -m_driverController.getRawAxis(Axis.kLeftY),
-              () -> -1 * (m_driverController.getRawAxis(Axis.kLeftTrigger) + 1) / 2,
-              () -> -1 * (m_driverController.getRawAxis(Axis.kRightTrigger) + 1) / 2));
+              () -> -1 * (m_driverController.getRawAxis(Axis.kLeftTrigger) + 1),
+              () -> -1 * (m_driverController.getRawAxis(Axis.kRightTrigger) + 1)));
 
       new JoystickButton(m_driverController, Button.kRightBumper).whileTrue(
           new ArcadeDriveCommand(m_driveSubsystem,
@@ -184,6 +184,9 @@ public class RobotContainer {
           
           new JoystickButton(m_driverController, Button.kB)
           .onTrue(new ArmPositionCommand(m_armSubsystem, ArmState.RESTING));
+
+          new JoystickButton(m_operatorController, Button.kB)
+          .onTrue(new ArmZeroPositionCommand(m_armSubsystem)); 
     }
     /*
      * =========================================

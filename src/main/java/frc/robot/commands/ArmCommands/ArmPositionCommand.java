@@ -38,7 +38,7 @@ public class ArmPositionCommand extends Command {
 
   @Override
   public boolean isFinished() {
-    if(loopsWithinThreshold >= 10) {
+    if(loopsWithinThreshold >= 20) {
       SmartDashboard.putBoolean("Arm at position", true);
       return true;
     }

@@ -17,7 +17,7 @@ public class ScoreSpeakerCommand extends SequentialCommandGroup {
       ShooterSubsystem shooterSubsystem, ArmState armState) {
     addCommands(
         new ArmPositionCommand(armSubsystem, armState),
-        new IntakeSpeedCommand(intakeSubsystem, -1 * ShooterConstants.kIntakeSpeed).withTimeout(0.1),
+        new IntakeSpeedCommand(intakeSubsystem, -1 * ShooterConstants.kIntakeSpeed-0.6).withTimeout(0.1),
         new ShooterSpeedCommand(shooterSubsystem, ShooterConstants.kShooterSpeakerSpeed).withTimeout(1.0),
         new IntakeSpeedCommand(intakeSubsystem, ShooterConstants.kIntakeSpeed).withTimeout(1.0),
         new StopShooterCommand(shooterSubsystem),

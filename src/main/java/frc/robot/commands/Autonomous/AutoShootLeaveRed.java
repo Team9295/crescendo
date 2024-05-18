@@ -17,13 +17,15 @@ public class AutoShootLeaveRed extends SequentialCommandGroup {
     public AutoShootLeaveRed(DriveSubsystem driveSubsystem, ArmSubsystem armSubsystem, 
             ShooterSubsystem shooterSubsystem, IntakeSubsystem intakeSubsystem) {
         addCommands(
+            // testing the turn
+
             new ArmSpeedCommand(armSubsystem, () -> -0.2).withTimeout(1.2),
             new StopArmCommand(armSubsystem),
             new ArmZeroPositionCommand(armSubsystem),
             new ScoreSpeakerCommand(armSubsystem, intakeSubsystem, shooterSubsystem, ArmState.SCORE_SPEAKER_AUTO_2), 
-            new TimeBasedAutoStraightCommand(driveSubsystem, 0.2).withTimeout(1.2),
-            new TimeBasedAutoTurnCommand(driveSubsystem, 0.2, 0.5).withTimeout(0.4),
-            new TimeBasedAutoStraightCommand(driveSubsystem, 0.2).withTimeout(1.2)
+            // new TimeBasedAutoStraightCommand(driveSubsystem, 0.2).withTimeout(1.2),
+            new TimeBasedAutoTurnCommand(driveSubsystem, 0.6, 0.5).withTimeout(1.5)//,
+            // new TimeBasedAutoStraightCommand(driveSubsystem, 0.2).withTimeout(1.2)
 
         );
 

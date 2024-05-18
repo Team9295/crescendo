@@ -28,6 +28,7 @@ public class AutoShootTwo extends SequentialCommandGroup{
             //don't know if they need timeout and for how long
             new TimeBasedAutoStraightCommand(driveSubsystem, -0.5).withTimeout(1.3),
             new ScoreSpeakerCommand(armSubsystem, intakeSubsystem, shooterSubsystem, ArmState.SCORE_SPEAKER_AUTO_2)
+            // new TimeBasedAutoTurnCommand(driveSubsystem, 0.6, 0.5).withTimeout(2)
             );
 
     }
