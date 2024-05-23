@@ -19,7 +19,7 @@ public class ScoreAmpCommand extends SequentialCommandGroup {
         System.out.println("scoring in amp");
     addCommands(
         new ArmPositionCommand(armSubsystem, ArmState.SCORE_AMP),
-        new IntakeSpeedCommand(intakeSubsystem, -1 * ShooterConstants.kIntakeSpeed + 0.6).withTimeout(0.1),
+        // new IntakeSpeedCommand(intakeSubsystem, -1 * ShooterConstants.kIntakeSpeed + 0.6).withTimeout(0.1),
         new ShooterAmpSpeedCommand(shooterSubsystem).withTimeout(1.5),
         new IntakeSpeedCommand(intakeSubsystem, ShooterConstants.kIntakeSpeed - 0.6).withTimeout(2.0),
         new StopShooterCommand(shooterSubsystem),

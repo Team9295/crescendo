@@ -176,6 +176,8 @@ public class RobotContainer {
 
       new JoystickButton(m_driverController, Button.kA)
           .onTrue(new ScoreCommand(m_armSubsystem, m_intakeSubsystem, m_shooterSubsystem));
+      new JoystickButton(m_operatorController, Button.kA)
+          .onTrue(new InstantCommand(() -> {}));
     }
 
     if (enableArm) {

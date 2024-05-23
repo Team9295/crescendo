@@ -120,7 +120,7 @@ public final class Constants {
 
     public enum ArmState {
       ZERO(0.0),
-      RESTING(10.0),
+      RESTING(17.0),
       //SCORE_AMP(10.5),
       SCORE_AMP(17.2), 
       SCORE_SPEAKER(4.4),
