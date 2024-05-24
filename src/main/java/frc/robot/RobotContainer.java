@@ -189,6 +189,9 @@ public class RobotContainer {
           .onTrue(new InstantCommand(() -> m_shooterSubsystem.decrementSpeedModifier(), m_shooterSubsystem));
       new Trigger(() -> Math.abs(m_operatorController.getRawAxis(Axis.kRightTrigger)) > 0)
           .onTrue(new InstantCommand(() -> m_shooterSubsystem.incrementSpeedModifier(), m_shooterSubsystem));
+
+      new JoystickButton(m_operatorController, Button.kA)
+          .whileTrue(new ShooterSpeedCommand(m_shooterSubsystem, -1 * ShooterConstants.kShooterAmpSpeed));
     }
     if (enableArm) {
       new Trigger(() -> Math.abs(m_operatorController.getRawAxis(Axis.kLeftY)) > ControllerConstants.kDeadzone)
@@ -202,10 +205,6 @@ public class RobotContainer {
 
       new JoystickButton(m_operatorController, Button.kY)
           .onTrue(new ClimbPositionCommand(m_climbSubsystem));
-    }
-    if (enableShooter) {
-      new JoystickButton(m_operatorController, Button.kA)
-          .whileTrue(new ShooterSpeedCommand(m_shooterSubsystem, -1 * ShooterConstants.kShooterAmpSpeed));
     }
   }
 
