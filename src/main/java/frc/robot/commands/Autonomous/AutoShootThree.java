@@ -13,19 +13,32 @@ import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 
-public class AutoShootTwo extends SequentialCommandGroup{
-    public AutoShootTwo(DriveSubsystem driveSubsystem, ArmSubsystem armSubsystem, 
+public class AutoShootThree extends SequentialCommandGroup{
+    public AutoShootThree(DriveSubsystem driveSubsystem, ArmSubsystem armSubsystem, 
     ShooterSubsystem shooterSubsystem, IntakeSubsystem intakeSubsystem) {
         addCommands(
             new ArmSpeedCommand(armSubsystem, () -> -0.2).withTimeout(1.2),
             new StopArmCommand(armSubsystem),
             new ArmZeroPositionCommand(armSubsystem),
             new ScoreSpeakerCommand(armSubsystem, intakeSubsystem, shooterSubsystem, ArmState.SCORE_SPEAKER_AUTO_2),
-            new WaitCommand(1.5), 
+            //reduce waits?
+            new WaitCommand(0.75), 
+
             new TimeBasedAutoStraightCommand(driveSubsystem, 0.5).withTimeout(1.2).raceWith(
                 new IntakeSpeedCommand(intakeSubsystem, 0.75).withTimeout(1.2)
             ),
-            new TimeBasedAutoStraightCommand(driveSubsystem, -0.5).withTimeout(1.3),
+            // second note scored, can only do this if we get the distance score
+            new ScoreSpeakerCommand(armSubsystem, intakeSubsystem, shooterSubsystem, ArmState.SCORE_SPEAKER_AUTO_2),
+            new WaitCommand(0.75), 
+            // turns
+            new TimeBasedAutoTurnCommand(driveSubsystem, 0.6, 0.5).withTimeout(2), 
+            // drive + intake for third note
+            new TimeBasedAutoStraightCommand(driveSubsystem, 0.5).withTimeout(0.4).raceWith(
+                new IntakeSpeedCommand(intakeSubsystem, 0.75).withTimeout(1.2)
+            ),
+            // third note scored, same situation as ^^^
+            new TimeBasedAutoTurnCommand(driveSubsystem, 0.6, -0.5).withTimeout(1.2), 
+            new TimeBasedAutoStraightCommand(driveSubsystem, -0.5).withTimeout(0.7),
             new ScoreSpeakerCommand(armSubsystem, intakeSubsystem, shooterSubsystem, ArmState.SCORE_SPEAKER_AUTO_2)
             );
 

@@ -28,6 +28,7 @@ import frc.robot.commands.ArmCommands.ArmSpeedCommand;
 import frc.robot.commands.ArmCommands.ArmZeroPositionCommand;
 import frc.robot.commands.Autonomous.AutoShootLeaveBlue;
 import frc.robot.commands.Autonomous.AutoShootLeaveRed;
+import frc.robot.commands.Autonomous.AutoShootThree;
 import frc.robot.commands.Autonomous.AutoShootTwo;
 import frc.robot.commands.ClimbCommands.ClimbPositionCommand;
 import frc.robot.commands.ClimbCommands.ClimbZeroPositionCommand;
@@ -96,7 +97,7 @@ public class RobotContainer {
     SmartDashboard.putData("Zero Climber", new ClimbZeroPositionCommand(m_climbSubsystem));
 
     // create options
-    m_autoChooser.addOption(//setDefaultOption(
+    m_autoChooser.setDefaultOption(
       "ShootTwo",
         new AutoShootTwo(m_driveSubsystem, m_armSubsystem, m_shooterSubsystem, m_intakeSubsystem));
 
@@ -104,9 +105,12 @@ public class RobotContainer {
       "BlueShootLeave", 
         new AutoShootLeaveBlue(m_driveSubsystem, m_armSubsystem, m_shooterSubsystem, m_intakeSubsystem));
 
-    m_autoChooser.setDefaultOption(//addOption(
+    m_autoChooser.addOption(
         "RedShootLeave",
         new AutoShootLeaveRed(m_driveSubsystem, m_armSubsystem, m_shooterSubsystem, m_intakeSubsystem));
+
+    m_autoChooser.addOption("ShootThree",
+        new AutoShootThree(m_driveSubsystem, m_armSubsystem, m_shooterSubsystem, m_intakeSubsystem));
 
     SmartDashboard.putData("auto", m_autoChooser);
   }
