@@ -81,6 +81,10 @@ public class ArmSubsystem extends SubsystemBase {
   }
 
   public void setSpeed(double speed) {
+    if (getPosition() >= 18 || getPosition() < 1) {
+      m_motor1.set(0);
+    }
+
     m_motor1.set(speed / (1.0 - ControllerConstants.kDeadzone));
   }
 }
