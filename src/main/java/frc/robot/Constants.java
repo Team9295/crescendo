@@ -154,7 +154,7 @@ public final class Constants {
 
     // set speed?
     public static final double kIntakeSpeed = 0.8;
-    public static final double kShooterSpeakerSpeed = 0.7;
+    public static final double kShooterSpeakerSpeed = 1.0;
     public static final double kShooterAmpSpeed = 0.6;
 
     public enum ScoringTarget {
