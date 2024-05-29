@@ -117,6 +117,7 @@ public final class Constants {
     public static final double kFF = 0.07;
     public static final double kSpeedLimitFactor = 0.5;
     public static final double kToleranceRotations = 0.2;
+    public static final double kArmSpeedModifier = 0.25;
 
     public enum ArmState {
       ZERO(0.0),

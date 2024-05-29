@@ -35,6 +35,7 @@ import frc.robot.commands.ClimbCommands.ClimbZeroPositionCommand;
 import frc.robot.commands.ShooterCommands.IntakeSpeedCommand;
 import frc.robot.commands.ShooterCommands.SetScoringTargetCommand;
 import frc.robot.commands.ShooterCommands.ShooterSpeedCommand;
+import frc.robot.commands.ShooterCommands.StopShooterCommand;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.ClimbSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
@@ -196,6 +197,8 @@ public class RobotContainer {
 
       new JoystickButton(m_operatorController, Button.kA)
           .whileTrue(new ShooterSpeedCommand(m_shooterSubsystem, -1 * ShooterConstants.kShooterAmpSpeed));
+      new JoystickButton(m_operatorController, Button.kX)
+          .onTrue(new StopShooterCommand(m_shooterSubsystem));
     }
     if (enableArm) {
       new Trigger(() -> Math.abs(m_operatorController.getRawAxis(Axis.kLeftY)) > ControllerConstants.kDeadzone)
