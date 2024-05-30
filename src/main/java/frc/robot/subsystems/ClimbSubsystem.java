@@ -31,7 +31,7 @@ public class ClimbSubsystem extends SubsystemBase {
 
     zeroEncoders();
 
-    pidController.setOutputRange(-0.6, 0.6);
+    pidController.setOutputRange(-1.0*ClimbConstants.kSpeedLimitFactor, 1.0*ClimbConstants.kSpeedLimitFactor);
     pidController.setP(0.1);
     pidController.setI(0);
     pidController.setD(0);
@@ -57,9 +57,9 @@ public class ClimbSubsystem extends SubsystemBase {
     pidController.setReference(targetState.getPosition(), ControlType.kPosition);
   }
 
-  public void setSpeed(double speed) {
-    leftClimbMotor.set(speed);
-    rightClimbMotor.set(speed);
+  public void setSpeed(double speedLeft, double speedRight) {
+    leftClimbMotor.set(speedLeft);
+    rightClimbMotor.set(speedRight);
   }
 
   public void printPosition() {
@@ -72,12 +72,17 @@ public class ClimbSubsystem extends SubsystemBase {
     SmartDashboard.putBoolean("climbTop", currentState == ClimberState.TOP);
     SmartDashboard.putBoolean("climbBottom", currentState == ClimberState.BOTTOM);
     SmartDashboard.putBoolean("climbZero", currentState == ClimberState.ZERO);
+  }
 
+  public void printSpeed() {
+    SmartDashboard.putNumber("left climb speed", leftClimbMotor.getAppliedOutput());
+    SmartDashboard.putNumber("right climb speed", rightClimbMotor.getAppliedOutput());
   }
 
   @Override
   public void periodic() {
     printPosition();
     printCurrentState();
+    printSpeed();
   }
 }

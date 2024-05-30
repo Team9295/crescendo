@@ -83,7 +83,7 @@ public final class Constants {
     public static final int kRightClimbPort = 11;
     public static final boolean kLeftClimbInverted = false;
     public static final boolean kRightClimbInverted = false;
-    public static final double kSpeedLimitFactor = 0.3;
+    public static final double kSpeedLimitFactor = 1.0;
 
     public static final double kToleranceRotations = 1.0;
 

@@ -207,8 +207,36 @@ public class RobotContainer {
           .onTrue(new ArmZeroPositionCommand(m_armSubsystem)); 
     }
     if (enableClimb) {
-      new Trigger(() -> Math.abs(m_operatorController.getRawAxis(Axis.kRightY)) > ControllerConstants.kDeadzone).whileTrue(
-          new ClimbSpeedCommand(m_climbSubsystem, () -> m_operatorController.getRawAxis(Axis.kRightY)));
+      new Trigger(() -> 
+        Math.abs(m_operatorController.getRawAxis(Axis.kRightY)) > ControllerConstants.kDeadzone
+      ).and(new JoystickButton(m_operatorController, Button.kLeftMenu).negate())
+        .and(new JoystickButton(m_operatorController, Button.kRightMenu).negate())
+        .whileTrue(
+          new ClimbSpeedCommand(
+            m_climbSubsystem,
+            () -> m_operatorController.getRawAxis(Axis.kRightY),
+            () -> m_operatorController.getRawAxis(Axis.kRightY) 
+            ));
+      new Trigger(() -> 
+        Math.abs(m_operatorController.getRawAxis(Axis.kRightY)) > ControllerConstants.kDeadzone
+      ).and(new JoystickButton(m_operatorController, Button.kLeftMenu))
+        .and(new JoystickButton(m_operatorController, Button.kRightMenu).negate())
+        .whileTrue(
+          new ClimbSpeedCommand(
+            m_climbSubsystem,
+            () -> m_operatorController.getRawAxis(Axis.kRightY),
+            () -> 0.0
+            ));
+      new Trigger(() -> 
+        Math.abs(m_operatorController.getRawAxis(Axis.kRightY)) > ControllerConstants.kDeadzone
+      ).and(new JoystickButton(m_operatorController, Button.kLeftMenu).negate())
+        .and(new JoystickButton(m_operatorController, Button.kRightMenu))
+        .whileTrue(
+          new ClimbSpeedCommand(
+            m_climbSubsystem,
+            () -> 0.0,
+            () -> m_operatorController.getRawAxis(Axis.kRightY) 
+            ));
 
       new JoystickButton(m_operatorController, Button.kY)
           .onTrue(new ClimbPositionCommand(m_climbSubsystem));
