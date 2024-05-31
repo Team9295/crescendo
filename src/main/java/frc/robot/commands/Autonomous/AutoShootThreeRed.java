@@ -28,10 +28,10 @@ public class AutoShootThreeRed  extends SequentialCommandGroup{
                 new IntakeSpeedCommand(intakeSubsystem, 0.75).withTimeout(1.2)
             ),
             // second note scored, can only do this if we get the distance score
-            new ScoreSpeakerCommand(armSubsystem, intakeSubsystem, shooterSubsystem, ArmState.SCORE_SPEAKER_AUTO_2),
+            new ScoreSpeakerCommand(armSubsystem, intakeSubsystem, shooterSubsystem, ArmState.SCORE_SPEAKER_AUTO),
             new WaitCommand(0.75), 
             // turns
-            new TimeBasedAutoTurnCommand(driveSubsystem, 0.6, 0.5).withTimeout(2), 
+            new TimeBasedAutoTurnCommand(driveSubsystem, 0.6, -0.5).withTimeout(2), 
             // drive + intake for third note
             new TimeBasedAutoStraightCommand(driveSubsystem, 0.5).withTimeout(0.4).raceWith(
                 new IntakeSpeedCommand(intakeSubsystem, 0.75).withTimeout(1.2)
