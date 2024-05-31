@@ -17,7 +17,8 @@ public class ClimbSubsystem extends SubsystemBase {
   private final RelativeEncoder leftEncoder = leftClimbMotor.getEncoder();
   private final RelativeEncoder rightEncoder = rightClimbMotor.getEncoder();
 
-  private SparkPIDController pidController = leftClimbMotor.getPIDController();
+  private SparkPIDController pidControllerLeft = leftClimbMotor.getPIDController();
+  private SparkPIDController pidControllerRight = rightClimbMotor.getPIDController();
   private double setpoint;
 
   private ClimberState currentState = ClimberState.ZERO;
@@ -27,15 +28,21 @@ public class ClimbSubsystem extends SubsystemBase {
     leftClimbMotor.setInverted(ClimbConstants.kLeftClimbInverted);
     rightClimbMotor.restoreFactoryDefaults();
     rightClimbMotor.setInverted(ClimbConstants.kRightClimbInverted);
-    rightClimbMotor.follow(leftClimbMotor);
+    //rightClimbMotor.follow(leftClimbMotor);
 
     zeroEncoders();
 
-    pidController.setOutputRange(-1.0*ClimbConstants.kSpeedLimitFactor, 1.0*ClimbConstants.kSpeedLimitFactor);
-    pidController.setP(0.1);
-    pidController.setI(0);
-    pidController.setD(0);
-    pidController.setFF(0);
+    pidControllerLeft.setOutputRange(-1.0*ClimbConstants.kSpeedLimitFactor, 1.0*ClimbConstants.kSpeedLimitFactor);
+    pidControllerLeft.setP(0.1);
+    pidControllerLeft.setI(0);
+    pidControllerLeft.setD(0);
+    pidControllerLeft.setFF(0);
+
+    pidControllerRight.setOutputRange(-1.0*ClimbConstants.kSpeedLimitFactor, 1.0*ClimbConstants.kSpeedLimitFactor);
+    pidControllerRight.setP(0.1);
+    pidControllerRight.setI(0);
+    pidControllerRight.setD(0);
+    pidControllerRight.setFF(0);
   }
 
   public void zeroEncoders() {
@@ -54,7 +61,8 @@ public class ClimbSubsystem extends SubsystemBase {
   public void setPosition(ClimberState targetState) {
     currentState = targetState;
     setpoint = targetState.getPosition();
-    pidController.setReference(targetState.getPosition(), ControlType.kPosition);
+    pidControllerLeft.setReference(targetState.getPosition(), ControlType.kPosition);
+    pidControllerRight.setReference(targetState.getPosition(), ControlType.kPosition);
   }
 
   public void setSpeed(double speedLeft, double speedRight) {

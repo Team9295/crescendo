@@ -189,6 +189,8 @@ public class RobotContainer {
           .onTrue(new SetScoringTargetCommand(m_shooterSubsystem, ScoringTarget.SPEAKER));
       new Trigger(() -> m_operatorController.getPOV() == DPad.kDown)
           .onTrue(new SetScoringTargetCommand(m_shooterSubsystem, ScoringTarget.AMP));
+      new Trigger(() -> m_operatorController.getPOV() == DPad.kRight)
+          .onTrue(new SetScoringTargetCommand(m_shooterSubsystem, ScoringTarget.PASS));
 
       new Trigger(() -> Math.abs(m_operatorController.getRawAxis(Axis.kLeftTrigger)) > 0)
           .onTrue(new InstantCommand(() -> m_shooterSubsystem.decrementSpeedModifier(), m_shooterSubsystem));
@@ -224,8 +226,8 @@ public class RobotContainer {
         .whileTrue(
           new ClimbSpeedCommand(
             m_climbSubsystem,
-            () -> m_operatorController.getRawAxis(Axis.kRightY),
-            () -> 0.0
+            () -> 0.0,
+            () -> m_operatorController.getRawAxis(Axis.kRightY)
             ));
       new Trigger(() -> 
         Math.abs(m_operatorController.getRawAxis(Axis.kRightY)) > ControllerConstants.kDeadzone
@@ -234,8 +236,8 @@ public class RobotContainer {
         .whileTrue(
           new ClimbSpeedCommand(
             m_climbSubsystem,
-            () -> 0.0,
-            () -> m_operatorController.getRawAxis(Axis.kRightY) 
+            () -> m_operatorController.getRawAxis(Axis.kRightY),
+            () -> 0.0
             ));
 
       new JoystickButton(m_operatorController, Button.kY)

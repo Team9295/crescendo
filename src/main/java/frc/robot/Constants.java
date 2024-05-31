@@ -122,10 +122,10 @@ public final class Constants {
     public enum ArmState {
       ZERO(0.0),
       RESTING(17.0),
-      //SCORE_AMP(10.5),
+      SCORE_PASS(5.5),
       SCORE_AMP(17.2), 
       SCORE_SPEAKER(4.4),
-      SCORE_SPEAKER_AUTO(4.8),
+      SCORE_SPEAKER_AUTO(7.5),
       SCORE_SPEAKER_AUTO_2(6.3);//5.4);
 
       final double position;
@@ -160,6 +160,7 @@ public final class Constants {
 
     public enum ScoringTarget {
       AMP,
+      PASS,
       SPEAKER
     }
   }

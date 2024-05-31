@@ -23,7 +23,8 @@ public class ArmSpeedCommand extends Command {
         ? speedSupplier.get()
         : 0.0;
 
-    armSubsystem.setSpeed(speed * ArmConstants.kArmSpeedModifier);
+    // armSubsystem.setSpeed(speed * ArmConstants.kArmSpeedModifier);
+    armSubsystem.setSpeed(speed);
   }
 
   @Override
