@@ -28,7 +28,8 @@ import frc.robot.commands.ArmCommands.ArmSpeedCommand;
 import frc.robot.commands.ArmCommands.ArmZeroPositionCommand;
 import frc.robot.commands.Autonomous.AutoShootLeaveBlue;
 import frc.robot.commands.Autonomous.AutoShootLeaveRed;
-import frc.robot.commands.Autonomous.AutoShootThree;
+import frc.robot.commands.Autonomous.AutoShootThreeBlue;
+import frc.robot.commands.Autonomous.AutoShootThreeRed;
 import frc.robot.commands.Autonomous.AutoShootTwo;
 import frc.robot.commands.ClimbCommands.ClimbPositionCommand;
 import frc.robot.commands.ClimbCommands.ClimbZeroPositionCommand;
@@ -110,8 +111,11 @@ public class RobotContainer {
         "RedShootLeave",
         new AutoShootLeaveRed(m_driveSubsystem, m_armSubsystem, m_shooterSubsystem, m_intakeSubsystem));
 
-    m_autoChooser.addOption("ShootThree",
-        new AutoShootThree(m_driveSubsystem, m_armSubsystem, m_shooterSubsystem, m_intakeSubsystem));
+    m_autoChooser.addOption("RedShootThree",
+        new AutoShootThreeRed(m_driveSubsystem, m_armSubsystem, m_shooterSubsystem, m_intakeSubsystem));
+        
+    m_autoChooser.addOption("BlueShootThree",
+        new AutoShootThreeBlue(m_driveSubsystem, m_armSubsystem, m_shooterSubsystem, m_intakeSubsystem));
 
     SmartDashboard.putData("auto", m_autoChooser);
   }

@@ -13,8 +13,8 @@ import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 
-public class AutoShootThree extends SequentialCommandGroup{
-    public AutoShootThree(DriveSubsystem driveSubsystem, ArmSubsystem armSubsystem, 
+public class AutoShootThreeBlue  extends SequentialCommandGroup{
+    public AutoShootThreeBlue (DriveSubsystem driveSubsystem, ArmSubsystem armSubsystem, 
     ShooterSubsystem shooterSubsystem, IntakeSubsystem intakeSubsystem) {
         addCommands(
             new ArmSpeedCommand(armSubsystem, () -> -0.2).withTimeout(1.2),
@@ -31,7 +31,7 @@ public class AutoShootThree extends SequentialCommandGroup{
             new ScoreSpeakerCommand(armSubsystem, intakeSubsystem, shooterSubsystem, ArmState.SCORE_SPEAKER_AUTO_2),
             new WaitCommand(0.75), 
             // turns
-            new TimeBasedAutoTurnCommand(driveSubsystem, 0.6, 0.5).withTimeout(2), 
+            new TimeBasedAutoTurnCommand(driveSubsystem, 0.6, -0.5).withTimeout(2), 
             // drive + intake for third note
             new TimeBasedAutoStraightCommand(driveSubsystem, 0.5).withTimeout(0.4).raceWith(
                 new IntakeSpeedCommand(intakeSubsystem, 0.75).withTimeout(1.2)
