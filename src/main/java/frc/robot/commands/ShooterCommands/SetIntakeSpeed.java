@@ -3,7 +3,7 @@ package frc.robot.commands.ShooterCommands;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.IntakeSubsystem;
 
-public class IntakeSpeedCommand extends Command {
+public class SetIntakeSpeed extends Command {
 
   private final IntakeSubsystem intakeSubsystem;
   private final double speed;
@@ -12,13 +12,13 @@ public class IntakeSpeedCommand extends Command {
    * Drive using speed inputs as a percentage output of the motor
    * 
    * @param intakeSubsystem The subsystem to be used
-   * @param d               Supplier of speed
+   * @param speed           Speed
    */
-  public IntakeSpeedCommand(IntakeSubsystem intakeSubsystem, double d) {
+  public SetIntakeSpeed(IntakeSubsystem intakeSubsystem, double speed) {
     addRequirements(intakeSubsystem);
 
     this.intakeSubsystem = intakeSubsystem;
-    this.speed = d;
+    this.speed = speed;
   }
 
   @Override

@@ -1,30 +1,27 @@
 package frc.robot.commands.ArmCommands;
 
-import java.util.function.Supplier;
-
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.ArmConstants;
 import frc.robot.Constants.ControllerConstants;
 import frc.robot.subsystems.ArmSubsystem;
 
-public class ArmSpeedCommand extends Command {
+public class SetArmSpeed extends Command {
   private final ArmSubsystem armSubsystem;
-  private Supplier<Double> speedSupplier;
+  private double speed;
 
-  public ArmSpeedCommand(ArmSubsystem armSubsystem, Supplier<Double> speed) {
+  public SetArmSpeed(ArmSubsystem armSubsystem, double speed) {
     addRequirements(armSubsystem);
     this.armSubsystem = armSubsystem;
-    this.speedSupplier = speed;
+    this.speed = speed;
   }
 
   @Override
   public void execute() {
-    double speed = Math.abs(speedSupplier.get()) > ControllerConstants.kDeadzone
-        ? speedSupplier.get()
+    double speedNow = Math.abs(speed) > ControllerConstants.kDeadzone
+        ? speed
         : 0.0;
 
-    // armSubsystem.setSpeed(speed * ArmConstants.kArmSpeedModifier);
-    armSubsystem.setSpeed(speed);
+    armSubsystem.setSpeed(speedNow * ArmConstants.kArmSpeedModifier);
   }
 
   @Override

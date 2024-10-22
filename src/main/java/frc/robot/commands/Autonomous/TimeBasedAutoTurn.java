@@ -3,20 +3,21 @@ package frc.robot.commands.Autonomous;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.DriveSubsystem;
 
-public class TimeBasedAutoStraightCommand extends Command{
+public class TimeBasedAutoTurn extends Command {
     private final DriveSubsystem m_driveSubsystem;
     private final double m_speed;
+    private final double m_direction;
 
-    public TimeBasedAutoStraightCommand(DriveSubsystem driveSubsystem, double speed) {
+    public TimeBasedAutoTurn(DriveSubsystem driveSubsystem, double speed, double direction) {
         addRequirements(driveSubsystem);
         m_driveSubsystem = driveSubsystem;
+        m_direction = direction;
         m_speed = speed;
     }
 
     @Override
     public void execute() {
-        m_driveSubsystem.tankDrive(m_speed, m_speed);
-        // when going forwar need to add backward subtract
+        m_driveSubsystem.tankDrive(m_speed * m_direction, m_speed * -m_direction);
     }
 
     @Override

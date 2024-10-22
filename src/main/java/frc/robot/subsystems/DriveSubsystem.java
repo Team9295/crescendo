@@ -16,8 +16,7 @@ public class DriveSubsystem extends SubsystemBase {
     private double leftDriveSpeed;
     private double rightDriveSpeed;
 
-    public DriveSubsystem()
-    {
+    public DriveSubsystem() {
         m_masterLeft.configFactoryDefault();
         m_masterLeft.setInverted(DriveConstants.kMasterLeftInvert);
         m_masterLeft.setNeutralMode(NeutralMode.Brake);
@@ -41,9 +40,10 @@ public class DriveSubsystem extends SubsystemBase {
     }
 
     public void arcadeDrive(double straight, double left, double right) {
-        leftDriveSpeed = DriveConstants.kSpeedLimitFactor * (straight + left - right) / (1 - ControllerConstants.kDeadzone);
+        leftDriveSpeed = DriveConstants.kSpeedLimitFactor * (straight + left - right)
+                / (1 - ControllerConstants.kDeadzone);
         rightDriveSpeed = DriveConstants.kSpeedLimitFactor * (straight - left + right)
-            / (1 - ControllerConstants.kDeadzone);
+                / (1 - ControllerConstants.kDeadzone);
         tankDrive(leftDriveSpeed, rightDriveSpeed);
     }
 

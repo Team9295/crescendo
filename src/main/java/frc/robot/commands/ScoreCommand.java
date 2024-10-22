@@ -3,6 +3,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.Constants.ArmConstants.ArmState;
+import frc.robot.Constants.ShooterConstants.ScoringTarget;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
@@ -14,19 +15,20 @@ public class ScoreCommand extends InstantCommand {
 
   public ScoreCommand(ArmSubsystem armSubsystem, IntakeSubsystem intakeSubsystem,
       ShooterSubsystem shooterSubsystem) {
-        this.armSubsystem = armSubsystem;
-        this.intakeSubsystem = intakeSubsystem;
-        this.shooterSubsystem = shooterSubsystem;
+    this.armSubsystem = armSubsystem;
+    this.intakeSubsystem = intakeSubsystem;
+    this.shooterSubsystem = shooterSubsystem;
   }
 
-  @Override public void execute() {
-      switch (shooterSubsystem.getScoringTarget()) {
+  @Override
+  public void execute() {
+    switch (shooterSubsystem.getScoringTarget()) {
       case AMP:
-      CommandScheduler.getInstance().schedule(new ScoreAmpCommand(armSubsystem, intakeSubsystem, shooterSubsystem));
-        
+        CommandScheduler.getInstance().schedule(new ScoreAmpCommand(armSubsystem, intakeSubsystem, shooterSubsystem));
         break;
       case SPEAKER:
-        CommandScheduler.getInstance().schedule(new ScoreSpeakerCommand(armSubsystem, intakeSubsystem, shooterSubsystem, ArmState.SCORE_SPEAKER_AUTO_2));
+        CommandScheduler.getInstance().schedule(
+            new ScoreSpeakerCommand(armSubsystem, intakeSubsystem, shooterSubsystem, ArmState.SCORE_SPEAKER_AUTO_2));
         break;
     }
   }

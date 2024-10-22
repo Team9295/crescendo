@@ -19,26 +19,23 @@ import frc.robot.Constants.ControllerConstants.Button;
 import frc.robot.Constants.ControllerConstants.DPad;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.ShooterConstants;
-import frc.robot.Constants.ShooterConstants.ScoringTarget;
-import frc.robot.commands.ArcadeDriveCommand;
-import frc.robot.commands.ClimbSpeedCommand;
-import frc.robot.commands.ScoreCommand;
-import frc.robot.commands.ArmCommands.ArmPositionCommand;
-import frc.robot.commands.ArmCommands.ArmSpeedCommand;
-import frc.robot.commands.ArmCommands.ArmZeroPositionCommand;
+//import frc.robot.Constants.ShooterConstants.ScoringTarget;
+import frc.robot.commands.ArcadeDrive;
+import frc.robot.commands.RunShooter;
+//import frc.robot.commands.ScoreCommand;
+import frc.robot.commands.ArmCommands.SetArmPosition;
+import frc.robot.commands.ArmCommands.SetArmSpeed;
+import frc.robot.commands.ArmCommands.ZeroArm;
 import frc.robot.commands.Autonomous.AutoShootLeaveBlue;
 import frc.robot.commands.Autonomous.AutoShootLeaveRed;
 import frc.robot.commands.Autonomous.AutoShootThreeBlue;
 import frc.robot.commands.Autonomous.AutoShootThreeRed;
 import frc.robot.commands.Autonomous.AutoShootTwo;
-import frc.robot.commands.ClimbCommands.ClimbPositionCommand;
-import frc.robot.commands.ClimbCommands.ClimbZeroPositionCommand;
-import frc.robot.commands.ShooterCommands.IntakeSpeedCommand;
-import frc.robot.commands.ShooterCommands.SetScoringTargetCommand;
-import frc.robot.commands.ShooterCommands.ShooterSpeedCommand;
-import frc.robot.commands.ShooterCommands.StopShooterCommand;
+import frc.robot.commands.ShooterCommands.SetIntakeSpeed;
+//import frc.robot.commands.ShooterCommands.SetScoreTarget;
+import frc.robot.commands.ShooterCommands.SetShooterSpeed;
+import frc.robot.commands.ShooterCommands.StopShooter;
 import frc.robot.subsystems.ArmSubsystem;
-import frc.robot.subsystems.ClimbSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
@@ -58,7 +55,6 @@ public class RobotContainer {
   private IntakeSubsystem m_intakeSubsystem;
   private ShooterSubsystem m_shooterSubsystem;
   private ArmSubsystem m_armSubsystem;
-  private ClimbSubsystem m_climbSubsystem;
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final Joystick m_driverController = new Joystick(ControllerConstants.kDriverControllerPort);
@@ -70,7 +66,6 @@ public class RobotContainer {
   private boolean enableIntake = true;
   private boolean enableShooter = true;
   private boolean enableArm = true;
-  private boolean enableClimb = true;
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -88,23 +83,19 @@ public class RobotContainer {
     if (enableArm) {
       m_armSubsystem = new ArmSubsystem();
     }
-    if (enableClimb) {
-      m_climbSubsystem = new ClimbSubsystem();
-    }
 
     // Configure the trigger bindings
     configureBindings();
 
-    SmartDashboard.putData("Zero Arm", new ArmZeroPositionCommand(m_armSubsystem));
-    SmartDashboard.putData("Zero Climber", new ClimbZeroPositionCommand(m_climbSubsystem));
+    SmartDashboard.putData("Zero Arm", new ZeroArm(m_armSubsystem));
 
     // create options
     m_autoChooser.setDefaultOption(
-      "ShootTwo",
+        "ShootTwo",
         new AutoShootTwo(m_driveSubsystem, m_armSubsystem, m_shooterSubsystem, m_intakeSubsystem));
 
     m_autoChooser.addOption(
-      "BlueShootLeave", 
+        "BlueShootLeave",
         new AutoShootLeaveBlue(m_driveSubsystem, m_armSubsystem, m_shooterSubsystem, m_intakeSubsystem));
 
     m_autoChooser.addOption(
@@ -113,7 +104,7 @@ public class RobotContainer {
 
     m_autoChooser.addOption("RedShootThree",
         new AutoShootThreeRed(m_driveSubsystem, m_armSubsystem, m_shooterSubsystem, m_intakeSubsystem));
-        
+
     m_autoChooser.addOption("BlueShootThree",
         new AutoShootThreeBlue(m_driveSubsystem, m_armSubsystem, m_shooterSubsystem, m_intakeSubsystem));
 
@@ -142,40 +133,38 @@ public class RobotContainer {
      */
     if (enableDrive) {
       m_driveSubsystem.setDefaultCommand(
-          new ArcadeDriveCommand(m_driveSubsystem, () -> -m_driverController.getRawAxis(Axis.kLeftY),
+          new ArcadeDrive(m_driveSubsystem, () -> -m_driverController.getRawAxis(Axis.kLeftY),
               () -> -1 * (m_driverController.getRawAxis(Axis.kLeftTrigger) + 1),
               () -> -1 * (m_driverController.getRawAxis(Axis.kRightTrigger) + 1)));
 
       new JoystickButton(m_driverController, Button.kRightBumper).whileTrue(
-          new ArcadeDriveCommand(m_driveSubsystem,
+          new ArcadeDrive(m_driveSubsystem,
               () -> 0.0, () -> -1 * DriveConstants.kTurningMultiplier * DriveConstants.kFineTurningSpeed,
               () -> DriveConstants.kTurningMultiplier * DriveConstants.kFineTurningSpeed));
 
       new JoystickButton(m_driverController, Button.kLeftBumper).whileTrue(
-          new ArcadeDriveCommand(m_driveSubsystem,
+          new ArcadeDrive(m_driveSubsystem,
               () -> 0.0, () -> DriveConstants.kTurningMultiplier * DriveConstants.kFineTurningSpeed,
               () -> -1 * DriveConstants.kTurningMultiplier * DriveConstants.kFineTurningSpeed));
     }
 
     if (enableIntake) {
-      // TODO: maybe rest at speaker shooting height and drop down to 0 when intaking?
       new JoystickButton(m_driverController, Button.kX).whileTrue(
-          // new SequentialCommandGroup(
-          //   new ArmSpeedCommand(m_armSubsystem, () -> 0.0),
-            new IntakeSpeedCommand(m_intakeSubsystem, ShooterConstants.kIntakeSpeed)//)
-          );
+          new SetIntakeSpeed(m_intakeSubsystem, ShooterConstants.kIntakeSpeed)// )
+      );
       new JoystickButton(m_driverController, Button.kY).whileTrue(
-          new IntakeSpeedCommand(m_intakeSubsystem, -1 * ShooterConstants.kIntakeSpeed));
+          new SetIntakeSpeed(m_intakeSubsystem, -1 * ShooterConstants.kIntakeSpeed));
     }
 
     if (enableShooter) {
       new JoystickButton(m_driverController, Button.kA)
-          .onTrue(new ScoreCommand(m_armSubsystem, m_intakeSubsystem, m_shooterSubsystem));
+          .onTrue(new RunShooter(m_intakeSubsystem, m_shooterSubsystem));
     }
 
     if (enableArm) {
       new JoystickButton(m_driverController, Button.kB)
-          .onTrue(new ArmPositionCommand(m_armSubsystem, ArmState.RESTING));
+          .onTrue(new SetArmSpeed(m_armSubsystem, 1.0));
+      // .onTrue(new ArmPositionCommand(m_armSubsystem, ArmState.RESTING));
     }
     /*
      * =========================================
@@ -189,12 +178,17 @@ public class RobotContainer {
           .onTrue(new InstantCommand(() -> m_intakeSubsystem.incrementSpeedModifier(), m_intakeSubsystem));
     }
     if (enableShooter) {
-      new Trigger(() -> m_operatorController.getPOV() == DPad.kUp)
-          .onTrue(new SetScoringTargetCommand(m_shooterSubsystem, ScoringTarget.SPEAKER));
-      new Trigger(() -> m_operatorController.getPOV() == DPad.kDown)
-          .onTrue(new SetScoringTargetCommand(m_shooterSubsystem, ScoringTarget.AMP));
+      new Trigger(() -> m_operatorController.getPOV() == DPad.kLeft)
+          .onTrue(new SetArmPosition(m_armSubsystem, ArmState.SCORE_SPEAKER));
+      // .onTrue(new SetScoringTargetCommand(m_shooterSubsystem,ScoringTarget.SPEAKER));
       new Trigger(() -> m_operatorController.getPOV() == DPad.kRight)
-          .onTrue(new SetScoringTargetCommand(m_shooterSubsystem, ScoringTarget.PASS));
+          .onTrue(new SetArmPosition(m_armSubsystem, ArmState.SCORE_AMP));
+      // .onTrue(new SetScoringTargetCommand(m_shooterSubsystem, ScoringTarget.AMP));
+      new Trigger(() -> m_operatorController.getPOV() == DPad.kUp)
+          .onTrue(new SetArmPosition(m_armSubsystem, ArmState.SCORE_PASS));
+      // .onTrue(new SetScoringTargetCommand(m_shooterSubsystem, ScoringTarget.PASS));
+      new Trigger(() -> m_operatorController.getPOV() == DPad.kDown)
+          .onTrue(new SetArmPosition(m_armSubsystem, ArmState.ZERO));
 
       new Trigger(() -> Math.abs(m_operatorController.getRawAxis(Axis.kLeftTrigger)) > 0)
           .onTrue(new InstantCommand(() -> m_shooterSubsystem.decrementSpeedModifier(), m_shooterSubsystem));
@@ -202,56 +196,21 @@ public class RobotContainer {
           .onTrue(new InstantCommand(() -> m_shooterSubsystem.incrementSpeedModifier(), m_shooterSubsystem));
 
       new JoystickButton(m_operatorController, Button.kA)
-          .whileTrue(new ShooterSpeedCommand(m_shooterSubsystem, -1 * ShooterConstants.kShooterAmpSpeed));
+          .whileTrue(new SetShooterSpeed(m_shooterSubsystem, -1 * ShooterConstants.kShooterAmpSpeed));
       new JoystickButton(m_operatorController, Button.kX)
-          .onTrue(new StopShooterCommand(m_shooterSubsystem));
+          .onTrue(new StopShooter(m_shooterSubsystem));
     }
     if (enableArm) {
       new Trigger(() -> Math.abs(m_operatorController.getRawAxis(Axis.kLeftY)) > ControllerConstants.kDeadzone)
-          .whileTrue(new ArmSpeedCommand(m_armSubsystem, () -> -1 * m_operatorController.getRawAxis(Axis.kLeftY)));
+          .whileTrue(new SetArmSpeed(m_armSubsystem, -1 * m_operatorController.getRawAxis(Axis.kLeftY)));
       new JoystickButton(m_operatorController, Button.kB)
-          .onTrue(new ArmZeroPositionCommand(m_armSubsystem)); 
-    }
-    if (enableClimb) {
-      new Trigger(() -> 
-        Math.abs(m_operatorController.getRawAxis(Axis.kRightY)) > ControllerConstants.kDeadzone
-      ).and(new JoystickButton(m_operatorController, Button.kLeftMenu).negate())
-        .and(new JoystickButton(m_operatorController, Button.kRightMenu).negate())
-        .whileTrue(
-          new ClimbSpeedCommand(
-            m_climbSubsystem,
-            () -> m_operatorController.getRawAxis(Axis.kRightY),
-            () -> m_operatorController.getRawAxis(Axis.kRightY) 
-            ));
-      new Trigger(() -> 
-        Math.abs(m_operatorController.getRawAxis(Axis.kRightY)) > ControllerConstants.kDeadzone
-      ).and(new JoystickButton(m_operatorController, Button.kLeftMenu))
-        .and(new JoystickButton(m_operatorController, Button.kRightMenu).negate())
-        .whileTrue(
-          new ClimbSpeedCommand(
-            m_climbSubsystem,
-            () -> 0.0,
-            () -> m_operatorController.getRawAxis(Axis.kRightY)
-            ));
-      new Trigger(() -> 
-        Math.abs(m_operatorController.getRawAxis(Axis.kRightY)) > ControllerConstants.kDeadzone
-      ).and(new JoystickButton(m_operatorController, Button.kLeftMenu).negate())
-        .and(new JoystickButton(m_operatorController, Button.kRightMenu))
-        .whileTrue(
-          new ClimbSpeedCommand(
-            m_climbSubsystem,
-            () -> m_operatorController.getRawAxis(Axis.kRightY),
-            () -> 0.0
-            ));
-
-      new JoystickButton(m_operatorController, Button.kY)
-          .onTrue(new ClimbPositionCommand(m_climbSubsystem));
+          .onTrue(new ZeroArm(m_armSubsystem));
     }
   }
 
-   public Command getAutonomousCommand() {
-     return m_autoChooser.getSelected();
-   }
+  public Command getAutonomousCommand() {
+    return m_autoChooser.getSelected();
+  }
 
   public void periodic() {
     if (enableDrive) {
@@ -265,9 +224,6 @@ public class RobotContainer {
     }
     if (enableArm) {
       m_armSubsystem.periodic();
-    }
-    if (enableClimb) {
-      m_climbSubsystem.periodic();
     }
   }
 }

@@ -42,7 +42,7 @@ public class IntakeSubsystem extends SubsystemBase {
 
   public void setSpeed(double speed) {
     double speedToSet = speed;
-    if(speed > 0) {
+    if (speed > 0) {
       speedToSet += speedModifier;
     } else if (speed < 0) {
       speedToSet -= speedModifier;

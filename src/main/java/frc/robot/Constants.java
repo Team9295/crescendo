@@ -110,23 +110,23 @@ public final class Constants {
     public static final int kArmRight = 7;
     public static final boolean kMotorInverted2 = true;
     public static final int kMinPosition = 0;
-    public static final double kP = 6.8; //more p 
-    public static final double kI = 0.0;//003;
+    public static final double kP = 6.8; // more p
+    public static final double kI = 0.0;// 003;
     public static final double kIz = 0;
-    public static final double kD = 6.0; //change as needed
+    public static final double kD = 6.0; // change as needed
     public static final double kFF = 0.07;
     public static final double kSpeedLimitFactor = 0.5;
     public static final double kToleranceRotations = 0.2;
-    public static final double kArmSpeedModifier = 0.25;
+    public static final double kArmSpeedModifier = 1;
 
     public enum ArmState {
       ZERO(0.0),
       RESTING(17.0),
       SCORE_PASS(5.5),
-      SCORE_AMP(17.2), 
+      SCORE_AMP(17.2),
       SCORE_SPEAKER(4.4),
       SCORE_SPEAKER_AUTO(7.5),
-      SCORE_SPEAKER_AUTO_2(6.3);//5.4);
+      SCORE_SPEAKER_AUTO_2(6.3);// 5.4);
 
       final double position;
 

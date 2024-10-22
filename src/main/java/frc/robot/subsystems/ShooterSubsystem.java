@@ -14,7 +14,7 @@ public class ShooterSubsystem extends SubsystemBase {
   private final VictorSPX shooterNearMotor = new VictorSPX(ShooterConstants.kShooterLeftPort);
 
   private ScoringTarget scoringTarget = ScoringTarget.SPEAKER;
-  
+
   private double speedModifier = 0.0;
 
   public ShooterSubsystem() {
@@ -36,7 +36,7 @@ public class ShooterSubsystem extends SubsystemBase {
   public ScoringTarget getScoringTarget() {
     return scoringTarget;
   }
-  
+
   public void incrementSpeedModifier() {
     speedModifier += 0.1;
   }
@@ -48,11 +48,12 @@ public class ShooterSubsystem extends SubsystemBase {
   public void stopShooter() {
     setSpeed(0);
   }
+
   public void printTarget() {
     SmartDashboard.putBoolean("targetAmp", scoringTarget == ScoringTarget.AMP);
     SmartDashboard.putBoolean("targetSpeaker", scoringTarget == ScoringTarget.SPEAKER);
   }
-  
+
   public void printSpeed() {
     SmartDashboard.putNumber("shooterAmpSpeed", ShooterConstants.kShooterAmpSpeed + speedModifier);
     SmartDashboard.putNumber("shooterSpeakerSpeed", ShooterConstants.kShooterSpeakerSpeed + speedModifier);
@@ -65,19 +66,25 @@ public class ShooterSubsystem extends SubsystemBase {
 
   public void setSpeed(double speed) {
     double speedToSet = speed + speedModifier;
-    if (speed == 0) { speedToSet = 0; }
+    if (speed == 0) {
+      speedToSet = 0;
+    }
     shooterNearMotor.set(VictorSPXControlMode.PercentOutput, speedToSet);
     shooterFarMotor.set(VictorSPXControlMode.PercentOutput, speedToSet);
   }
 
   public void setSpeed(double topSpeed, double bottomSpeed) {
-        double speedToSetTop = topSpeed + speedModifier;
-    if (topSpeed == 0) { speedToSetTop = 0; }
-        double speedToSetBottom = bottomSpeed + speedModifier;
-    if (bottomSpeed == 0) { speedToSetBottom = 0; }
-      shooterNearMotor.set(VictorSPXControlMode.PercentOutput, speedToSetTop);
-      shooterFarMotor.set(VictorSPXControlMode.PercentOutput, speedToSetBottom);
-      
+    double speedToSetTop = topSpeed + speedModifier;
+    if (topSpeed == 0) {
+      speedToSetTop = 0;
+    }
+    double speedToSetBottom = bottomSpeed + speedModifier;
+    if (bottomSpeed == 0) {
+      speedToSetBottom = 0;
+    }
+    shooterNearMotor.set(VictorSPXControlMode.PercentOutput, speedToSetTop);
+    shooterFarMotor.set(VictorSPXControlMode.PercentOutput, speedToSetBottom);
+
   }
 
 }

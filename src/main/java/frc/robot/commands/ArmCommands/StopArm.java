@@ -3,10 +3,10 @@ package frc.robot.commands.ArmCommands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.subsystems.ArmSubsystem;
 
-public class StopArmCommand extends InstantCommand {
+public class StopArm extends InstantCommand {
   private final ArmSubsystem armSubsystem;
 
-  public StopArmCommand(ArmSubsystem armSubsystem) {
+  public StopArm(ArmSubsystem armSubsystem) {
     addRequirements(armSubsystem);
     this.armSubsystem = armSubsystem;
   }

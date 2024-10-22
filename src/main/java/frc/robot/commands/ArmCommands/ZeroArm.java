@@ -3,10 +3,10 @@ package frc.robot.commands.ArmCommands;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.ArmSubsystem;
 
-public class ArmZeroPositionCommand extends Command {
+public class ZeroArm extends Command {
   ArmSubsystem armSubsystem;
 
-  public ArmZeroPositionCommand(ArmSubsystem armSubsystem) {
+  public ZeroArm(ArmSubsystem armSubsystem) {
     this.armSubsystem = armSubsystem;
 
     addRequirements(armSubsystem);

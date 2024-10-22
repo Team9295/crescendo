@@ -34,7 +34,7 @@ public class ArmSubsystem extends SubsystemBase {
     m_motor2.follow(m_motor1, true);
 
     m_pidController.setOutputRange(-1 * ArmConstants.kSpeedLimitFactor, ArmConstants.kSpeedLimitFactor);
-    //m_pidController.setOutputRange(-0.4, 0.4);
+    // m_pidController.setOutputRange(-0.4, 0.4);
     m_pidController.setP(ArmConstants.kP);
     m_pidController.setI(ArmConstants.kI);
     m_pidController.setIZone(ArmConstants.kIz);
@@ -56,7 +56,7 @@ public class ArmSubsystem extends SubsystemBase {
   }
 
   public double getClosedLoopError() {
-    return Math.abs(m_encoder.getPosition() - m_setPoint.getPosition()); 
+    return Math.abs(m_encoder.getPosition() - m_setPoint.getPosition());
   }
 
   public void setPosition(ArmState targetState) {
@@ -82,9 +82,10 @@ public class ArmSubsystem extends SubsystemBase {
 
   public void setSpeed(double speed) {
     // if (getPosition() >= 18 || getPosition() < 1) {
-      // m_motor1.set(0);
+    // m_motor1.set(0);
     // }
 
-    m_motor1.set(speed / (1.0 - ControllerConstants.kDeadzone));
+    // m_motor1.set(speed / (1.0 - ControllerConstants.kDeadzone));
+    m_motor2.set(speed / (1.0 - ControllerConstants.kDeadzone));
   }
 }

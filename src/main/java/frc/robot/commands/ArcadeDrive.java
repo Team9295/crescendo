@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.ControllerConstants;
 import frc.robot.subsystems.DriveSubsystem;
 
-public class ArcadeDriveCommand extends Command {
+public class ArcadeDrive extends Command {
 
   private final DriveSubsystem m_driveSubsystem;
   private final Supplier<Double> m_speedStraight, m_speedLeft, m_speedRight;
@@ -19,7 +19,7 @@ public class ArcadeDriveCommand extends Command {
    * @param speedLeft      Supplier of left speed
    * @param speedRight     Supplier of right speed
    */
-  public ArcadeDriveCommand(DriveSubsystem driveSubsystem, Supplier<Double> speedStraight, Supplier<Double> speedLeft,
+  public ArcadeDrive(DriveSubsystem driveSubsystem, Supplier<Double> speedStraight, Supplier<Double> speedLeft,
       Supplier<Double> speedRight) {
     m_driveSubsystem = driveSubsystem;
     m_speedStraight = speedStraight;
