@@ -33,7 +33,7 @@ public class ArmSubsystem extends SubsystemBase {
     m_motor2.enableVoltageCompensation(8);
     m_motor2.follow(m_motor1, true);
 
-    m_pidController.setOutputRange(-1 * ArmConstants.kSpeedLimitFactor, ArmConstants.kSpeedLimitFactor);
+    m_pidController.setOutputRange(-1, 1); //* ArmConstants.kSpeedLimitFactor, ArmConstants.kSpeedLimitFactor);
     // m_pidController.setOutputRange(-0.4, 0.4);
     m_pidController.setP(ArmConstants.kP);
     m_pidController.setI(ArmConstants.kI);
@@ -85,7 +85,6 @@ public class ArmSubsystem extends SubsystemBase {
     // m_motor1.set(0);
     // }
 
-    // m_motor1.set(speed / (1.0 - ControllerConstants.kDeadzone));
-    m_motor2.set(speed / (1.0 - ControllerConstants.kDeadzone));
+    m_motor1.set(speed / (1.0 - ControllerConstants.kDeadzone));
   }
 }

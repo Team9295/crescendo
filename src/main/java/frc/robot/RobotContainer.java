@@ -178,16 +178,16 @@ public class RobotContainer {
           .onTrue(new InstantCommand(() -> m_intakeSubsystem.incrementSpeedModifier(), m_intakeSubsystem));
     }
     if (enableShooter) {
-      new Trigger(() -> m_operatorController.getPOV() == DPad.kLeft)
+      new Trigger(() -> m_driverController.getPOV() == DPad.kLeft)
           .onTrue(new SetArmPosition(m_armSubsystem, ArmState.SCORE_SPEAKER));
       // .onTrue(new SetScoringTargetCommand(m_shooterSubsystem,ScoringTarget.SPEAKER));
-      new Trigger(() -> m_operatorController.getPOV() == DPad.kRight)
+      new Trigger(() -> m_driverController.getPOV() == DPad.kRight)
           .onTrue(new SetArmPosition(m_armSubsystem, ArmState.SCORE_AMP));
       // .onTrue(new SetScoringTargetCommand(m_shooterSubsystem, ScoringTarget.AMP));
-      new Trigger(() -> m_operatorController.getPOV() == DPad.kUp)
+      new Trigger(() -> m_driverController.getPOV() == DPad.kUp)
           .onTrue(new SetArmPosition(m_armSubsystem, ArmState.SCORE_PASS));
       // .onTrue(new SetScoringTargetCommand(m_shooterSubsystem, ScoringTarget.PASS));
-      new Trigger(() -> m_operatorController.getPOV() == DPad.kDown)
+      new Trigger(() -> m_driverController.getPOV() == DPad.kDown)
           .onTrue(new SetArmPosition(m_armSubsystem, ArmState.ZERO));
 
       new Trigger(() -> Math.abs(m_operatorController.getRawAxis(Axis.kLeftTrigger)) > 0)
