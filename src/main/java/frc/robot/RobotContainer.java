@@ -58,14 +58,14 @@ public class RobotContainer {
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final Joystick m_driverController = new Joystick(ControllerConstants.kDriverControllerPort);
-  private final Joystick m_operatorController = new Joystick(ControllerConstants.kOperatorControllerPort);
+  //private final Joystick m_operatorController = new Joystick(ControllerConstants.kOperatorControllerPort);
 
   private final SendableChooser<Command> m_autoChooser = new SendableChooser<>();
 
   private boolean enableDrive = true;
   private boolean enableIntake = true;
   private boolean enableShooter = true;
-  private boolean enableArm = true;
+  private boolean enableArm = false;
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -165,19 +165,6 @@ public class RobotContainer {
       new JoystickButton(m_driverController, Button.kB)
           .onTrue(new SetArmSpeed(m_armSubsystem, 1.0));
       // .onTrue(new ArmPositionCommand(m_armSubsystem, ArmState.RESTING));
-    }
-    /*
-     * =========================================
-     * | OPERATOR CONTROLS |
-     * =========================================
-     */
-    if (enableIntake) {
-      new JoystickButton(m_operatorController, Button.kLeftBumper)
-          .onTrue(new InstantCommand(() -> m_intakeSubsystem.decrementSpeedModifier(), m_intakeSubsystem));
-      new JoystickButton(m_operatorController, Button.kRightBumper)
-          .onTrue(new InstantCommand(() -> m_intakeSubsystem.incrementSpeedModifier(), m_intakeSubsystem));
-    }
-    if (enableShooter) {
       new Trigger(() -> m_driverController.getPOV() == DPad.kLeft)
           .onTrue(new SetArmPosition(m_armSubsystem, ArmState.SCORE_SPEAKER));
       // .onTrue(new SetScoringTargetCommand(m_shooterSubsystem,ScoringTarget.SPEAKER));
@@ -189,7 +176,19 @@ public class RobotContainer {
       // .onTrue(new SetScoringTargetCommand(m_shooterSubsystem, ScoringTarget.PASS));
       new Trigger(() -> m_driverController.getPOV() == DPad.kDown)
           .onTrue(new SetArmPosition(m_armSubsystem, ArmState.ZERO));
-
+    }
+    /*
+     * =========================================
+     * | OPERATOR CONTROLS |
+     * =========================================
+     *//*
+    if (enableIntake) {
+      new JoystickButton(m_operatorController, Button.kLeftBumper)
+          .onTrue(new InstantCommand(() -> m_intakeSubsystem.decrementSpeedModifier(), m_intakeSubsystem));
+      new JoystickButton(m_operatorController, Button.kRightBumper)
+          .onTrue(new InstantCommand(() -> m_intakeSubsystem.incrementSpeedModifier(), m_intakeSubsystem));
+    }
+    if (enableShooter) {
       new Trigger(() -> Math.abs(m_operatorController.getRawAxis(Axis.kLeftTrigger)) > 0)
           .onTrue(new InstantCommand(() -> m_shooterSubsystem.decrementSpeedModifier(), m_shooterSubsystem));
       new Trigger(() -> Math.abs(m_operatorController.getRawAxis(Axis.kRightTrigger)) > 0)
@@ -205,7 +204,7 @@ public class RobotContainer {
           .whileTrue(new SetArmSpeed(m_armSubsystem, -1 * m_operatorController.getRawAxis(Axis.kLeftY)));
       new JoystickButton(m_operatorController, Button.kB)
           .onTrue(new ZeroArm(m_armSubsystem));
-    }
+  } */
   }
 
   public Command getAutonomousCommand() {

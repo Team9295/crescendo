@@ -12,9 +12,9 @@ public class RunShooter extends SequentialCommandGroup {
   public RunShooter(IntakeSubsystem intakeSubsystem,
       ShooterSubsystem shooterSubsystem) {
     addCommands(
-        new SetIntakeSpeed(intakeSubsystem, -1 * ShooterConstants.kIntakeSpeed + 0.0).withTimeout(0.1),
-        new SetShooterSpeed(shooterSubsystem, ShooterConstants.kShooterSpeakerSpeed).withTimeout(1.0),
-        new SetIntakeSpeed(intakeSubsystem, ShooterConstants.kIntakeSpeed).withTimeout(1.0),
+        new SetIntakeSpeed(intakeSubsystem, -0.5 * ShooterConstants.kIntakeSpeed).withTimeout(0.1),
+        new SetShooterSpeed(shooterSubsystem, ShooterConstants.kShooterSpeakerSpeed).withTimeout(0.5),
+        new SetIntakeSpeed(intakeSubsystem, 1).withTimeout(0.5),
         new StopShooter(shooterSubsystem));
   }
 }
